@@ -1,0 +1,74 @@
+import React, { useEffect, useState } from 'react';
+import { BriefingDetail } from '../types';
+import { fetchBriefingDetail } from '../services/dataService';
+import AudioPlayer from './AudioPlayer';
+import MarkdownRenderer from './MarkdownRenderer';
+import { ChevronLeftIcon } from './Icons';
+
+interface DetailViewProps {
+  id: string;
+  onBack: () => void;
+}
+
+const DetailView: React.FC<DetailViewProps> = ({ id, onBack }) => {
+  const [detail, setDetail] = useState<BriefingDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBriefingDetail(id).then(data => {
+      setDetail(data);
+      setLoading(false);
+    });
+  }, [id]);
+
+  if (loading || !detail) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-background">
+        <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background text-text pb-32 animate-fade-in relative">
+      {/* Background Ambience */}
+      <div className="fixed inset-0 z-0 opacity-20 pointer-events-none">
+         <img src={detail.coverImage} className="w-full h-full object-cover blur-3xl" alt="" />
+         <div className="absolute inset-0 bg-background/80"></div>
+      </div>
+
+      {/* Header / Nav */}
+      <nav className="fixed top-0 w-full z-40 px-4 py-4 md:px-8 md:py-6 flex items-center">
+        <button 
+            onClick={onBack}
+            className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+        >
+            <ChevronLeftIcon />
+        </button>
+      </nav>
+
+      {/* Hero Section */}
+      <div className="relative z-10 pt-20 px-4 md:px-8 max-w-3xl mx-auto">
+        <div className="mb-8">
+            <span className="font-mono text-accent text-sm tracking-wider mb-2 block">{detail.date}</span>
+            <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-6">
+                {detail.title}
+            </h1>
+            <div className="h-1 w-20 bg-accent rounded-full"></div>
+        </div>
+
+        {/* Content Container */}
+        <div className="bg-surface/50 backdrop-blur-xl border border-white/5 rounded-2xl p-6 md:p-10 shadow-2xl">
+            <div className="prose prose-invert max-w-none">
+                <MarkdownRenderer content={detail.fullContent} />
+            </div>
+        </div>
+      </div>
+
+      {/* Player */}
+      <AudioPlayer detail={detail} />
+    </div>
+  );
+};
+
+export default DetailView;
