@@ -1,0 +1,45 @@
+[
+
+  {
+    "id": "2026-01-05",
+    "date": "2026-01-05",
+    "title": "2025 Year Outlook: Global Situation Review",
+    "summary": "Deep analysis of today key events, focusing on technology breakthroughs, policy trends, and global market dynamics.",
+    "coverImage": "https://picsum.photos/800/600?random=1"
+  },
+  {
+    "id": "2026-01-04",
+    "date": "2026-01-04",
+    "title": "AI Regulation: New Policies from the EU",
+    "summary": "A comprehensive analysis of today most critical events, focusing on the intersection of technology, policy, and global market trends.",
+    "coverImage": "https://picsum.photos/800/600?random=2"
+  },
+  {
+    "id": "2026-01-03",
+    "date": "2026-01-03",
+    "title": "SpaceX Starship: Success in Orbit",
+    "summary": "SpaceX achieves a historic milestone with the successful orbital insertion of Starship, marking a new era for interplanetary travel.",
+    "coverImage": "https://picsum.photos/800/600?random=3"
+  },
+  {
+    "id": "2026-01-02",
+    "date": "2026-01-02",
+    "title": "Quantum Computing: Breaking the Threshold",
+    "summary": "Breakthroughs in error correction suggest quantum supremacy is closer than previously estimated by experts.",
+    "coverImage": "https://picsum.photos/800/600?random=4"
+  },
+  {
+    "id": "2026-01-01",
+    "date": "2026-01-01",
+    "title": "Sustainable Energy: Fusion Milestones",
+    "summary": "Fusion energy output exceeds input for the third consecutive test, sparking a surge in green energy investments.",
+    "coverImage": "https://picsum.photos/800/600?random=5"
+  },
+  {
+    "id": "2026-01-06",
+    "date": "2026/1/5 20:32",
+    "title": "最新全球政治、经济、军事新闻",
+    "summary": "各位观众，大家好，我是每日新闻频道主持人晓晓。今天是2026年1月6日，我们聚焦六个关键领域的全球动态：美中达成贸易框架协议但执行细节悬而未决，加沙停火后超400名巴勒斯坦人死于以军违规行动，俄土重启黑海粮食通道谈判取得突破性进展，美联储暗示2026年仅有一次降息引发市场波动，解放军台海军演首次进入24海里毗连区引发美日强烈反应，沙特主导OPEC+确认一季度暂停增产以稳定油价。接下来为您带来详细报道。",
+    "coverImage": "https://picsum.photos/800/600?random=1"
+  }
+]

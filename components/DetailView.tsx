@@ -13,18 +13,45 @@ interface DetailViewProps {
 const DetailView: React.FC<DetailViewProps> = ({ id, onBack }) => {
   const [detail, setDetail] = useState<BriefingDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchBriefingDetail(id).then(data => {
-      setDetail(data);
-      setLoading(false);
-    });
+    const loadDetail = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await fetchBriefingDetail(id);
+        setDetail(data);
+      } catch (err) {
+        console.error('Failed to load briefing detail:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load briefing detail');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDetail();
   }, [id]);
 
-  if (loading || !detail) {
+  if (loading) {
     return (
       <div className="h-screen w-full flex items-center justify-center bg-background">
         <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error || !detail) {
+    return (
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-background p-4">
+        <h2 className="text-2xl font-bold text-white mb-4">Error Loading Briefing</h2>
+        <p className="text-subtext mb-8 text-center">{error || 'Unknown error occurred'}</p>
+        <button 
+            onClick={onBack}
+            className="px-6 py-3 bg-accent text-black font-medium rounded-full hover:bg-accent/90 transition-colors"
+        >
+            Return to List
+        </button>
       </div>
     );
   }
