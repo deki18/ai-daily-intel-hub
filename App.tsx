@@ -3,6 +3,7 @@ import { AppView } from './types';
 import LandingView from './components/LandingView';
 import ListView from './components/ListView';
 import DetailView from './components/DetailView';
+import { startFileWatcher } from './services/dataService';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>(AppView.LANDING);
@@ -12,6 +13,12 @@ const App: React.FC = () => {
   useEffect(() => {
     // Optional: check if user visited before to skip landing?
     // For now, we always show landing for the experience.
+  }, []);
+
+  // Start file watcher with polling mechanism
+  useEffect(() => {
+    const stopWatcher = startFileWatcher(30000); // Poll every 30 seconds
+    return stopWatcher;
   }, []);
 
   const handleEnter = () => {
