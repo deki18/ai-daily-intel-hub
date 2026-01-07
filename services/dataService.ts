@@ -34,7 +34,7 @@ export const fetchBriefingList = async (options: FetchBriefingListOptions = {}):
     for (const briefing of data) {
       try {
         // Skip invalid IDs that don't match the expected date format
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(briefing.id)) {
+        if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(briefing.id)) {
           console.warn(`Skipping briefing with invalid ID format: ${briefing.id}`);
           continue;
         }
