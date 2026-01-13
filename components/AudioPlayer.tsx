@@ -12,17 +12,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1.0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 428);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
 
   // Setup Media Session API for lock screen controls
   useEffect(() => {
@@ -99,6 +88,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
+  const iconSize = window.innerWidth < 640 ? 20 : 24;
+
   return (
     <div className="w-full bg-surface/90 backdrop-blur-md border-t border-white/10 p-2 max-sm:p-1.5 pb-4 max-sm:pb-3 fixed bottom-0 left-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
       <audio
@@ -135,18 +126,18 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
 
             <div className="flex items-center gap-3 max-sm:gap-2">
                 <button onClick={() => skip(-15)} className="text-gray-400 hover:text-white transition-colors">
-                    <RewindIcon size={isMobile ? 20 : 24} />
+                    <RewindIcon size={iconSize} />
                 </button>
 
-                <button 
-                    onClick={togglePlay} 
+                <button
+                    onClick={togglePlay}
                     className="bg-accent text-black rounded-full p-2.5 max-sm:p-2 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
                 >
-                    {isPlaying ? <PauseIcon size={isMobile ? 20 : 24} /> : <PlayIcon size={isMobile ? 20 : 24} className="ml-1" />}
+                    {isPlaying ? <PauseIcon size={iconSize} /> : <PlayIcon size={iconSize} className="ml-1" />}
                 </button>
 
                 <button onClick={() => skip(15)} className="text-gray-400 hover:text-white transition-colors">
-                    <FastForwardIcon size={isMobile ? 20 : 24} />
+                    <FastForwardIcon size={iconSize} />
                 </button>
             </div>
 

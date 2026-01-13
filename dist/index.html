@@ -3,7 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Daily Intel Hub</title>
+    <title>AI Daily Intel Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: '#0A0A0A',
+              surface: '#121212',
+              text: '#E5E5E5',
+              subtext: '#A0A0A0',
+              accent: '#D4AF37', // Gold
+              'accent-blue': '#007AFF', // Tech Blue
+            },
+            fontFamily: {
+              sans: ['Inter', 'PingFang SC', 'Microsoft YaHei', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+              mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out forwards',
+              'slide-up': 'slideUp 0.6s ease-out forwards',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <!-- Removed Google Fonts import to avoid net::ERR_ABORTED error -->
+    <style>
+      body {
+        background-color: #0A0A0A;
+        color: #E5E5E5;
+        font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Custom scrollbar for dark theme */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0A0A0A;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+    </style>
 
 <!-- Removed non-existent index.css file -->
 <script type="importmap">
@@ -17,8 +77,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-Ss_anfZh.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CFsl65Zk.css">
+  <script type="module" crossorigin src="./assets/index-BtZD4g86.js"></script>
 </head>
   <body>
     <div id="root"></div>
