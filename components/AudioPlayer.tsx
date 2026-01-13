@@ -89,7 +89,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
   };
 
   return (
-    <div className="w-full bg-surface/90 backdrop-blur-md border-t border-white/10 p-4 pb-8 md:pb-4 fixed bottom-0 left-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+    <div className="w-full bg-surface/90 backdrop-blur-md border-t border-white/10 p-3 pb-6 sm:pb-8 md:pb-4 fixed bottom-0 left-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
       <audio
         ref={audioRef}
         src={detail.audioUrl}
@@ -98,10 +98,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
         onEnded={() => setIsPlaying(false)}
       />
 
-      <div className="max-w-3xl mx-auto flex flex-col gap-3">
+      <div className="max-w-3xl mx-auto flex flex-col gap-2 sm:gap-3">
         {/* Progress Bar */}
-        <div className="flex items-center gap-3 text-xs text-gray-400 font-mono">
-          <span>{formatTime(currentTime)}</span>
+        <div className="flex items-center gap-2 text-xs text-gray-400 font-mono">
+          <span className="min-w-[40px] text-right">{formatTime(currentTime)}</span>
           <input
             type="range"
             min={0}
@@ -110,7 +110,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
             onChange={handleProgressChange}
             className="flex-grow h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:rounded-full"
           />
-          <span>{formatTime(duration)}</span>
+          <span className="min-w-[40px]">{formatTime(duration)}</span>
         </div>
 
         {/* Controls */}
@@ -122,20 +122,20 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
                 {playbackRate}x
             </button>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6">
                 <button onClick={() => skip(-15)} className="text-gray-400 hover:text-white transition-colors">
-                    <RewindIcon size={24} />
+                    <RewindIcon size={20} sm:size={24} />
                 </button>
 
                 <button 
                     onClick={togglePlay} 
-                    className="bg-accent text-black rounded-full p-3 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                    className="bg-accent text-black rounded-full p-2.5 sm:p-3 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
                 >
-                    {isPlaying ? <PauseIcon size={28} /> : <PlayIcon size={28} className="ml-1" />}
+                    {isPlaying ? <PauseIcon size={24} sm:size={28} /> : <PlayIcon size={24} sm:size={28} className="ml-1" />}
                 </button>
 
                 <button onClick={() => skip(15)} className="text-gray-400 hover:text-white transition-colors">
-                    <FastForwardIcon size={24} />
+                    <FastForwardIcon size={20} sm:size={24} />
                 </button>
             </div>
 
