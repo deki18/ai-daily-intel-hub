@@ -124,18 +124,18 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
 
             <div className="flex items-center gap-4 sm:gap-6">
                 <button onClick={() => skip(-15)} className="text-gray-400 hover:text-white transition-colors">
-                    <RewindIcon size={20} sm:size={24} />
+                    <RewindIcon size={24} />
                 </button>
 
                 <button 
                     onClick={togglePlay} 
                     className="bg-accent text-black rounded-full p-2.5 sm:p-3 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
                 >
-                    {isPlaying ? <PauseIcon size={24} sm:size={28} /> : <PlayIcon size={24} sm:size={28} className="ml-1" />}
+                    {isPlaying ? <PauseIcon size={24} /> : <PlayIcon size={24} className="ml-1" />}
                 </button>
 
                 <button onClick={() => skip(15)} className="text-gray-400 hover:text-white transition-colors">
-                    <FastForwardIcon size={20} sm:size={24} />
+                    <FastForwardIcon size={24} />
                 </button>
             </div>
 
