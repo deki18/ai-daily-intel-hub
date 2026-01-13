@@ -12,6 +12,17 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 428);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   // Setup Media Session API for lock screen controls
   useEffect(() => {
@@ -89,7 +100,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
   };
 
   return (
-    <div className="w-full bg-surface/90 backdrop-blur-md border-t border-white/10 p-3 pb-6 sm:pb-8 md:pb-4 fixed bottom-0 left-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+    <div className="w-full bg-surface/90 backdrop-blur-md border-t border-white/10 p-2 max-sm:p-1.5 pb-4 max-sm:pb-3 fixed bottom-0 left-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
       <audio
         ref={audioRef}
         src={detail.audioUrl}
@@ -100,47 +111,47 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
 
       <div className="max-w-3xl mx-auto flex flex-col gap-2 sm:gap-3">
         {/* Progress Bar */}
-        <div className="flex items-center gap-2 text-xs text-gray-400 font-mono">
-          <span className="min-w-[40px] text-right">{formatTime(currentTime)}</span>
+        <div className="flex items-center gap-1 max-sm:gap-1 text-xs text-gray-400 font-mono">
+          <span className="min-w-[36px] max-sm:min-w-[32px] text-right">{formatTime(currentTime)}</span>
           <input
             type="range"
             min={0}
             max={duration || 0}
             value={currentTime}
             onChange={handleProgressChange}
-            className="flex-grow h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:rounded-full"
+            className="flex-grow h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:rounded-full"
           />
-          <span className="min-w-[40px]">{formatTime(duration)}</span>
+          <span className="min-w-[36px] max-sm:min-w-[32px]">{formatTime(duration)}</span>
         </div>
 
         {/* Controls */}
-        <div className="flex items-center justify-between md:justify-center md:gap-12">
+        <div className="flex items-center justify-between max-sm:gap-2">
             <button 
                 onClick={cyclePlaybackRate}
-                className="text-xs font-bold text-accent border border-accent/30 rounded px-2 py-1 w-12 hover:bg-accent/10 transition-colors"
+                className="text-xs font-bold text-accent border border-accent/30 rounded px-2 py-1 max-sm:w-10 hover:bg-accent/10 transition-colors"
             >
                 {playbackRate}x
             </button>
 
-            <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-3 max-sm:gap-2">
                 <button onClick={() => skip(-15)} className="text-gray-400 hover:text-white transition-colors">
-                    <RewindIcon size={24} />
+                    <RewindIcon size={isMobile ? 20 : 24} />
                 </button>
 
                 <button 
                     onClick={togglePlay} 
-                    className="bg-accent text-black rounded-full p-2.5 sm:p-3 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                    className="bg-accent text-black rounded-full p-2.5 max-sm:p-2 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
                 >
-                    {isPlaying ? <PauseIcon size={24} /> : <PlayIcon size={24} className="ml-1" />}
+                    {isPlaying ? <PauseIcon size={isMobile ? 20 : 24} /> : <PlayIcon size={isMobile ? 20 : 24} className="ml-1" />}
                 </button>
 
                 <button onClick={() => skip(15)} className="text-gray-400 hover:text-white transition-colors">
-                    <FastForwardIcon size={24} />
+                    <FastForwardIcon size={isMobile ? 20 : 24} />
                 </button>
             </div>
 
             {/* Placeholder for symmetry or volume on desktop */}
-            <div className="w-12"></div>
+            <div className="w-12 max-sm:w-10"></div>
         </div>
       </div>
     </div>
