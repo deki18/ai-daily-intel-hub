@@ -53,21 +53,6 @@ npm run build
 
 Build output will be generated in the `dist` directory.
 
-## Project Structure
-
-```
-ai-daily-intel-hub/
-├── components/        # React components
-├── services/          # Data services
-├── App.tsx            # Application entry component
-├── index.tsx          # Application rendering
-├── types.ts           # TypeScript type definitions
-├── index.html         # HTML template
-├── package.json       # Project configuration
-├── tsconfig.json      # TypeScript configuration
-└── vite.config.ts     # Vite configuration
-```
-
 ## License
 
 MIT
