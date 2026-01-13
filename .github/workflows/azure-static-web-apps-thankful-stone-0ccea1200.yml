@@ -22,6 +22,10 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Clean Git Config
+        run: |
+          git config --global --unset http.https://github.com/.extraheader || true
+          git config --global --unset-all http.https://github.com/.extraheader || true
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
