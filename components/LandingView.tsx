@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { HeadphonesIcon } from './Icons';
+import { Language } from '../src/i18n/i18n';
 
 interface LandingViewProps {
   onEnter: () => void;
+  language: Language;
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
 
-const LandingView: React.FC<LandingViewProps> = ({ onEnter }) => {
-  const [greeting, setGreeting] = useState('');
+const LandingView: React.FC<LandingViewProps> = ({ onEnter, language, t }) => {
+  const [greetingKey, setGreetingKey] = useState('');
 
   useEffect(() => {
     const hours = new Date().getHours();
-    if (hours < 12) setGreeting('Good Morning, Explorer');
-    else if (hours < 18) setGreeting('Good Afternoon, Explorer');
-    else setGreeting('Good Evening, Explorer');
+    if (hours < 12) setGreetingKey('greeting.morning');
+    else if (hours < 18) setGreetingKey('greeting.afternoon');
+    else setGreetingKey('greeting.evening');
   }, []);
 
   return (
@@ -27,11 +30,11 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnter }) => {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500">
-                {greeting}
+                {t(greetingKey)}
             </h1>
 
             <p className="text-subtext max-w-md text-sm md:text-base tracking-wide uppercase font-light">
-                Your daily intelligence briefing is ready.
+                {t('landing.subtitle')}
             </p>
 
             <button 
@@ -41,17 +44,17 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnter }) => {
                 <div className="absolute inset-0 w-full h-full border border-accent/50 rounded-full"></div>
                 <div className="absolute inset-0 w-0 bg-accent transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
                 <span className="relative text-accent font-medium tracking-widest text-sm group-hover:text-accent-light flex items-center gap-2">
-                    ACCESS INTEL
+                    {t('landing.accessButton')}
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </span>
             </button>
         </div>
 
         <div className="absolute bottom-8 text-xs text-gray-700 font-mono">
-            SECURE CONNECTION ESTABLISHED
+            {t('footer.secureConnection')}
         </div>
     </div>
   );
-};
+}
 
 export default LandingView;

@@ -1,0 +1,40 @@
+{
+  "greeting": {
+    "morning": "Good Morning, Explorer",
+    "afternoon": "Good Afternoon, Explorer",
+    "evening": "Good Evening, Explorer"
+  },
+  "landing": {
+    "subtitle": "Your daily intelligence briefing is ready.",
+    "accessButton": "ACCESS INTEL"
+  },
+  "list": {
+    "title": "Recent Briefings",
+    "description": "Deep dives and intelligence reports from the last 24 hours.",
+    "searchPlaceholder": "Search briefings...",
+    "pagination": "Showing {{start}} to {{end}} of {{total}} briefings",
+    "noResults": "No briefings found",
+    "error": "Failed to load briefing list",
+    "tryAgain": "Try Again",
+    "previous": "Previous",
+    "next": "Next",
+    "pageInfo": "Page {{current}} of {{total}}"
+  },
+  "detail": {
+    "error": "Error Loading Briefing",
+    "returnToList": "Return to List"
+  },
+  "audioPlayer": {
+    "playbackRate": "{{rate}}x",
+    "playError": "Audio playback error",
+    "loadError": "音频加载失败，请检查网络连接或稍后重试"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "Switch Language"
+  },
+  "footer": {
+    "secureConnection": "SECURE CONNECTION ESTABLISHED"
+  }
+}

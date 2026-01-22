@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { DailyBriefing } from '../types';
 import { fetchBriefingList } from '../services/dataService';
 import { HeadphonesIcon, SearchIcon } from './Icons';
+import LanguageSelector from '../src/components/LanguageSelector';
+import { Language } from '../src/i18n/i18n';
 
 interface ListViewProps {
   onSelect: (id: string) => void;
   onBack: () => void;
+  t: (key: string, params?: Record<string, string | number>) => string;
+  language: Language;
+  onLanguageChange: (language: Language) => void;
 }
 
-const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
+const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLanguageChange }) => {
   const [briefings, setBriefings] = useState<DailyBriefing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,7 +63,13 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
             <button onClick={onBack} className="text-sm text-subtext hover:text-white transition-colors tracking-widest uppercase font-medium">
                 AI Daily Intel
             </button>
-            <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+            <div className="flex items-center gap-4">
+                <LanguageSelector 
+                    currentLanguage={language} 
+                    onLanguageChange={onLanguageChange} 
+                />
+                <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+            </div>
         </header>
 
         <div className="mb-12 mt-6">
@@ -72,7 +83,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
             </div>
             <input
               type="text"
-              placeholder="Search briefings..."
+              placeholder={t('list.searchPlaceholder')}
               value={searchQuery}
               onChange={handleSearch}
               className="w-full pl-12 pr-4 py-3 bg-surface border border-white/10 rounded-xl text-white placeholder-subtext focus:outline-none focus:border-accent/40 transition-colors"
@@ -96,17 +107,23 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
             <button onClick={onBack} className="text-sm text-subtext hover:text-white transition-colors tracking-widest uppercase font-medium">
                 AI Daily Intel
             </button>
-            <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+            <div className="flex items-center gap-4">
+                <LanguageSelector 
+                    currentLanguage={language} 
+                    onLanguageChange={onLanguageChange} 
+                />
+                <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+            </div>
         </header>
 
         <div className="flex flex-col items-center justify-center h-screen">
-          <h2 className="text-2xl font-bold text-white mb-4">Error Loading Briefings</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('list.error')}</h2>
           <p className="text-subtext mb-8 text-center">{error}</p>
           <button 
               onClick={() => loadBriefings()}
               className="px-6 py-3 bg-accent text-black font-medium rounded-full hover:bg-accent/90 transition-colors"
           >
-              Try Again
+              {t('list.tryAgain')}
           </button>
         </div>
       </div>
@@ -119,12 +136,18 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
             <button onClick={onBack} className="text-sm text-subtext hover:text-white transition-colors tracking-widest uppercase font-medium">
                 AI Daily Intel
             </button>
-            <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+            <div className="flex items-center gap-4">
+                <LanguageSelector 
+                    currentLanguage={language} 
+                    onLanguageChange={onLanguageChange} 
+                />
+                <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+            </div>
         </header>
 
         <div className="mb-12 mt-6">
-          <h2 className="text-3xl font-bold text-white mb-2 font-sans tracking-tight">Recent Briefings</h2>
-          <p className="text-subtext text-sm">Deep dives and intelligence reports from the last 24 hours.</p>
+          <h2 className="text-3xl font-bold text-white mb-2 font-sans tracking-tight">{t('list.title')}</h2>
+          <p className="text-subtext text-sm">{t('list.description')}</p>
           
           {/* Search Bar */}
           <div className="mt-6 relative">
@@ -133,7 +156,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
             </div>
             <input
               type="text"
-              placeholder="Search briefings..."
+              placeholder={t('list.searchPlaceholder')}
               value={searchQuery}
               onChange={handleSearch}
               className="w-full pl-12 pr-4 py-3 bg-surface border border-white/10 rounded-xl text-white placeholder-subtext focus:outline-none focus:border-accent/40 transition-colors"
@@ -203,7 +226,11 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
         {total > pageSize && (
             <div className="mt-12 flex items-center justify-between">
                 <div className="text-sm text-subtext">
-                    Showing {((page - 1) * pageSize) + 1} to {Math.min(page * pageSize, total)} of {total} briefings
+                    {t('list.pagination', {
+                        start: ((page - 1) * pageSize) + 1,
+                        end: Math.min(page * pageSize, total),
+                        total: total
+                    })}
                 </div>
                 
                 <div className="flex items-center space-x-2">
@@ -212,11 +239,14 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
                         disabled={page === 1}
                         className="px-4 py-2 bg-surface border border-white/10 rounded-xl text-subtext hover:text-white disabled:opacity-30 transition-colors"
                     >
-                        Previous
+                        {t('list.previous')}
                     </button>
                     
                     <div className="text-sm text-subtext">
-                        Page {page} of {totalPages}
+                        {t('list.pageInfo', {
+                            current: page,
+                            total: totalPages
+                        })}
                     </div>
                     
                     <button
@@ -224,7 +254,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack }) => {
                         disabled={page === totalPages}
                         className="px-4 py-2 bg-surface border border-white/10 rounded-xl text-subtext hover:text-white disabled:opacity-30 transition-colors"
                     >
-                        Next
+                        {t('list.next')}
                     </button>
                 </div>
             </div>

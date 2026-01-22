@@ -4,9 +4,10 @@ import { BriefingDetail } from '../types';
 
 interface AudioPlayerProps {
   detail: BriefingDetail;
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -40,11 +41,14 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        audioRef.current.play().catch(error => {
+          console.error('Audio playback error:', error);
+          alert(t('audioPlayer.loadError'));
+        });
       }
       setIsPlaying(!isPlaying);
     }
-  }, [isPlaying]);
+  }, [isPlaying, t]);
 
   const skip = (seconds: number) => {
     if (audioRef.current) {
@@ -62,6 +66,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
     }
+  };
+
+  const handleError = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
+    console.error('Audio loading error:', e);
+    setIsPlaying(false);
   };
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,9 +107,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail }) => {
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
+        onError={handleError}
       />
 
-      <div className="max-w-3xl mx-auto flex flex-col gap-2 sm:gap-3">
+      <div className="w-full px-4 flex flex-col gap-2 sm:gap-3">
         {/* Progress Bar */}
         <div className="flex items-center gap-1 max-sm:gap-1 text-xs text-gray-400 font-mono">
           <span className="min-w-[36px] max-sm:min-w-[32px] text-right">{formatTime(currentTime)}</span>

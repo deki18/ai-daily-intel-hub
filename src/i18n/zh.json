@@ -1,0 +1,40 @@
+{
+  "greeting": {
+    "morning": "早上好，探索者",
+    "afternoon": "下午好，探索者",
+    "evening": "晚上好，探索者"
+  },
+  "landing": {
+    "subtitle": "您的每日情报简报已准备就绪。",
+    "accessButton": "访问情报"
+  },
+  "list": {
+    "title": "最新简报",
+    "description": "过去24小时的深度分析和情报报告。",
+    "searchPlaceholder": "搜索简报...",
+    "pagination": "显示第 {{start}} 到 {{end}} 条，共 {{total}} 条简报",
+    "noResults": "未找到简报",
+    "error": "加载简报列表失败",
+    "tryAgain": "重试",
+    "previous": "上一页",
+    "next": "下一页",
+    "pageInfo": "第 {{current}} 页，共 {{total}} 页"
+  },
+  "detail": {
+    "error": "加载简报失败",
+    "returnToList": "返回列表"
+  },
+  "audioPlayer": {
+    "playbackRate": "{{rate}}倍速",
+    "playError": "音频播放错误",
+    "loadError": "音频加载失败，请检查网络连接或稍后重试"
+  },
+  "language": {
+    "chinese": "中文",
+    "english": "English",
+    "switchLanguage": "切换语言"
+  },
+  "footer": {
+    "secureConnection": "安全连接已建立"
+  }
+}

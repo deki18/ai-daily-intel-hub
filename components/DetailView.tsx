@@ -4,13 +4,18 @@ import { fetchBriefingDetail } from '../services/dataService';
 import AudioPlayer from './AudioPlayer';
 import MarkdownRenderer from './MarkdownRenderer';
 import { ChevronLeftIcon } from './Icons';
+import LanguageSelector from '../src/components/LanguageSelector';
+import { Language } from '../src/i18n/i18n';
 
 interface DetailViewProps {
   id: string;
   onBack: () => void;
+  language: Language;
+  t: (key: string, params?: Record<string, string | number>) => string;
+  onLanguageChange: (language: Language) => void;
 }
 
-const DetailView: React.FC<DetailViewProps> = ({ id, onBack }) => {
+const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLanguageChange }) => {
   const [detail, setDetail] = useState<BriefingDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,13 +49,13 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack }) => {
   if (error || !detail) {
     return (
       <div className="h-screen w-full flex flex-col items-center justify-center bg-background p-4">
-        <h2 className="text-2xl font-bold text-white mb-4">Error Loading Briefing</h2>
+        <h2 className="text-2xl font-bold text-white mb-4">{t('detail.error')}</h2>
         <p className="text-subtext mb-8 text-center">{error || 'Unknown error occurred'}</p>
         <button 
             onClick={onBack}
             className="px-6 py-3 bg-accent text-black font-medium rounded-full hover:bg-accent/90 transition-colors"
         >
-            Return to List
+            {t('detail.returnToList')}
         </button>
       </div>
     );
@@ -65,13 +70,17 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack }) => {
       </div>
 
       {/* Header / Nav */}
-      <nav className="fixed top-0 w-full z-40 px-4 py-4 md:px-8 md:py-6 flex items-center">
+      <nav className="fixed top-0 w-full z-40 px-4 py-4 md:px-8 md:py-6 flex items-center justify-between">
         <button 
             onClick={onBack}
             className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
         >
             <ChevronLeftIcon />
         </button>
+        <LanguageSelector 
+            currentLanguage={language} 
+            onLanguageChange={onLanguageChange} 
+        />
       </nav>
 
       {/* Hero Section */}
@@ -93,7 +102,10 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack }) => {
       </div>
 
       {/* Player */}
-      <AudioPlayer detail={detail} />
+      <AudioPlayer 
+        detail={detail} 
+        t={t} 
+      />
     </div>
   );
 };

@@ -3,11 +3,14 @@ import { AppView } from './types';
 import LandingView from './components/LandingView';
 import ListView from './components/ListView';
 import DetailView from './components/DetailView';
+import LanguageSelector from './src/components/LanguageSelector';
+import { useLanguage } from './src/i18n/i18n';
 import { startFileWatcher } from './services/dataService';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>(AppView.LANDING);
   const [selectedBriefingId, setSelectedBriefingId] = useState<string | null>(null);
+  const { language, switchLanguage, t } = useLanguage();
 
   // Simple state persistence for demo experience reset
   useEffect(() => {
@@ -42,14 +45,23 @@ const App: React.FC = () => {
 
   return (
     <div className="antialiased selection:bg-accent selection:text-black">
+
+
       {currentView === AppView.LANDING && (
-        <LandingView onEnter={handleEnter} />
+        <LandingView 
+          onEnter={handleEnter} 
+          language={language} 
+          t={t} 
+        />
       )}
 
       {currentView === AppView.LIST && (
         <ListView 
             onSelect={handleSelectBriefing} 
             onBack={handleBackToLanding} 
+            t={t} 
+            language={language}
+            onLanguageChange={switchLanguage}
         />
       )}
 
@@ -57,6 +69,8 @@ const App: React.FC = () => {
         <DetailView 
             id={selectedBriefingId} 
             onBack={handleBackToList} 
+            language={language} 
+            t={t} 
         />
       )}
     </div>
