@@ -25,7 +25,7 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
       try {
         setLoading(true);
         setError(null);
-        const data = await fetchBriefingDetail(id);
+        const data = await fetchBriefingDetail(id, language);
         setDetail(data);
       } catch (err) {
         console.error('Failed to load briefing detail:', err);
@@ -36,7 +36,7 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
     };
 
     loadDetail();
-  }, [id]);
+  }, [id, language]);
 
   if (loading) {
     return (

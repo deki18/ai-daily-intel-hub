@@ -1,4 +1,5 @@
 import { DailyBriefing, BriefingDetail } from '../types';
+import { Language } from '../src/i18n/i18n';
 
 // Fetch briefing list from local JSON file with file existence validation
 export interface FetchBriefingListOptions {
@@ -14,11 +15,20 @@ export interface BriefingListResult {
   pageSize: number;
 }
 
-export const fetchBriefingList = async (options: FetchBriefingListOptions = {}): Promise<BriefingListResult> => {
+export const fetchBriefingList = async (options: FetchBriefingListOptions = {}, language: Language = 'zh'): Promise<BriefingListResult> => {
   const { page = 1, pageSize = 10, searchQuery = '' } = options;
   
   try {
-    const response = await fetch(`/data/index.json?t=${new Date().getTime()}`);
+    // 构建请求URL，优先使用语言目录，如果不存在则回退到默认目录
+    let url = `/data/${language}/index.json?t=${new Date().getTime()}`;
+    let response = await fetch(url);
+    
+    // 如果语言目录不存在，回退到默认目录
+    if (!response.ok) {
+      url = `/data/index.json?t=${new Date().getTime()}`;
+      response = await fetch(url);
+    }
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -191,9 +201,18 @@ async function getArchiveFileList(): Promise<string[]> {
 };
 
 // Fetch briefing detail from local JSON file
-export const fetchBriefingDetail = async (id: string): Promise<BriefingDetail> => {
+export const fetchBriefingDetail = async (id: string, language: Language = 'zh'): Promise<BriefingDetail> => {
   try {
-    const response = await fetch(`/data/archive/${id}.json?t=${new Date().getTime()}`);
+    // 构建请求URL，优先使用语言目录，如果不存在则回退到默认目录
+    let url = `/data/${language}/archive/${id}.json?t=${new Date().getTime()}`;
+    let response = await fetch(url);
+    
+    // 如果语言目录不存在，回退到默认目录
+    if (!response.ok) {
+      url = `/data/archive/${id}.json?t=${new Date().getTime()}`;
+      response = await fetch(url);
+    }
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

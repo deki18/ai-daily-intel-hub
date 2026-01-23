@@ -3,7 +3,6 @@ import { AppView } from './types';
 import LandingView from './components/LandingView';
 import ListView from './components/ListView';
 import DetailView from './components/DetailView';
-import LanguageSelector from './src/components/LanguageSelector';
 import { useLanguage } from './src/i18n/i18n';
 import { startFileWatcher } from './services/dataService';
 
@@ -71,6 +70,7 @@ const App: React.FC = () => {
             onBack={handleBackToList} 
             language={language} 
             t={t} 
+            onLanguageChange={switchLanguage}
         />
       )}
     </div>

@@ -30,7 +30,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLa
         page: currentPage,
         pageSize,
         searchQuery: query
-      });
+      }, language);
       setBriefings(result.data);
       setTotal(result.total);
       setPage(currentPage);
@@ -44,7 +44,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLa
 
   useEffect(() => {
     loadBriefings(1, searchQuery);
-  }, [searchQuery]);
+  }, [searchQuery, language]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
