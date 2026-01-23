@@ -19,9 +19,9 @@ const App: React.FC = () => {
 
   // Start file watcher with polling mechanism
   useEffect(() => {
-    const stopWatcher = startFileWatcher(30000); // Poll every 30 seconds
+    const stopWatcher = startFileWatcher(30000, language); // Poll every 30 seconds with current language
     return stopWatcher;
-  }, []);
+  }, [language]);
 
   const handleEnter = () => {
     setCurrentView(AppView.LIST);

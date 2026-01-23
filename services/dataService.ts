@@ -32,7 +32,14 @@ export const fetchBriefingList = async (options: FetchBriefingListOptions = {}, 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
+    
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error('JSON parse error for index.json:', parseError);
+      throw new Error(`Invalid JSON format in index.json: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`);
+    }
     
     // Validate the data structure
     if (!Array.isArray(data)) {
@@ -90,11 +97,27 @@ export const fetchBriefingList = async (options: FetchBriefingListOptions = {}, 
 };
 
 // Synchronize index.json with archive folder content
-export const syncIndexWithArchive = async (): Promise<void> => {
+export const syncIndexWithArchive = async (language: Language = 'zh'): Promise<void> => {
   try {
-    // 1. Fetch current index
-    const indexResponse = await fetch(`/data/index.json?t=${new Date().getTime()}`);
-    const currentIndex: DailyBriefing[] = indexResponse.ok ? await indexResponse.json() : [];
+    // 1. Fetch current index with language-specific path
+    let indexUrl = `/data/${language}/index.json?t=${new Date().getTime()}`;
+    let indexResponse = await fetch(indexUrl);
+    
+    // Fallback to default if language-specific index doesn't exist
+    if (!indexResponse.ok) {
+      indexUrl = `/data/index.json?t=${new Date().getTime()}`;
+      indexResponse = await fetch(indexUrl);
+    }
+    
+    let currentIndex: DailyBriefing[] = [];
+    if (indexResponse.ok) {
+      try {
+        currentIndex = await indexResponse.json();
+      } catch (parseError) {
+        console.warn('Failed to parse index.json, using empty array:', parseError);
+        currentIndex = [];
+      }
+    }
     
     // 2. Get list of files in archive folder (Note: This is a browser-side workaround)
     // In a production environment, you would need a server endpoint to list files
@@ -116,22 +139,34 @@ export const syncIndexWithArchive = async (): Promise<void> => {
     for (const [id, filename] of fileMap.entries()) {
       if (!indexMap.has(id)) {
         try {
-          // Fetch the file to get metadata
-          const fileResponse = await fetch(`/data/archive/${filename}`);
+          // Fetch the file to get metadata with language-specific path
+          let fileUrl = `/data/${language}/archive/${filename}`;
+          let fileResponse = await fetch(fileUrl);
+          
+          // Fallback to default if language-specific file doesn't exist
+          if (!fileResponse.ok) {
+            fileUrl = `/data/archive/${filename}`;
+            fileResponse = await fetch(fileUrl);
+          }
+          
           if (fileResponse.ok) {
-            const fileData = await fileResponse.json();
-            
-            // Create minimal entry for new file
-            const newEntry: DailyBriefing = {
-              id: fileData.id || id,
-              date: fileData.date || new Date().toISOString().split('T')[0],
-              title: fileData.title || `Briefing ${id}`,
-              summary: fileData.summary || `Summary for briefing ${id}`,
-              coverImage: fileData.coverImage || `https://picsum.photos/800/600?random=${Math.random()}`
-            };
-            
-            newIndex.push(newEntry);
-            console.log(`Added new file to index: ${id}`);
+            try {
+              const fileData = await fileResponse.json();
+              
+              // Create minimal entry for new file
+              const newEntry: DailyBriefing = {
+                id: fileData.id || id,
+                date: fileData.date || new Date().toISOString().split('T')[0],
+                title: fileData.title || `Briefing ${id}`,
+                summary: fileData.summary || `Summary for briefing ${id}`,
+                coverImage: fileData.coverImage || `https://picsum.photos/800/600?random=${Math.random()}`
+              };
+              
+              newIndex.push(newEntry);
+              console.log(`Added new file to index: ${id}`);
+            } catch (parseError) {
+              console.warn(`Failed to parse file ${filename}, skipping:`, parseError);
+            }
           }
         } catch (error) {
           console.warn(`Failed to add file ${id} to index:`, error);
@@ -152,7 +187,7 @@ export const syncIndexWithArchive = async (): Promise<void> => {
     
   } catch (error) {
     console.error('Failed to synchronize index with archive:', error);
-    throw error;
+    // Don't throw error to prevent breaking the application
   }
 };
 
@@ -242,13 +277,13 @@ export const fetchBriefingDetail = async (id: string, language: Language = 'zh')
 };
 
 // Start file watcher with polling mechanism
-export const startFileWatcher = (interval: number = 10000): (() => void) => {
+export const startFileWatcher = (interval: number = 10000, language: Language = 'zh'): (() => void) => {
   console.log(`Starting file watcher with ${interval}ms polling interval`);
   
   const intervalId = setInterval(async () => {
     try {
       console.log('Running file synchronization...');
-      await syncIndexWithArchive();
+      await syncIndexWithArchive(language);
     } catch (error) {
       console.error('File watcher error:', error);
     }
