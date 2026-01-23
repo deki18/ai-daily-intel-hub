@@ -41,14 +41,24 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
+        // Set the audio source only when user clicks play
+        if (!audioRef.current.src.includes(detail.audioUrl)) {
+          audioRef.current.src = detail.audioUrl;
+        }
         audioRef.current.play().catch(error => {
-          console.error('Audio playback error:', error);
-          alert(t('audioPlayer.loadError'));
+          // Only log errors in development mode
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn('Audio playback error (development mode):', error);
+          }
+          // Avoid alerting in development mode to prevent frequent prompts
+          if (process.env.NODE_ENV === 'production') {
+            alert(t('audioPlayer.loadError'));
+          }
         });
       }
       setIsPlaying(!isPlaying);
     }
-  }, [isPlaying, t]);
+  }, [isPlaying, t, detail.audioUrl]);
 
   const skip = (seconds: number) => {
     if (audioRef.current) {
@@ -69,7 +79,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
   };
 
   const handleError = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
-    console.error('Audio loading error:', e);
+    // Only log errors in development mode
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('Audio loading error (development mode):', e);
+    }
     setIsPlaying(false);
   };
 
@@ -103,7 +116,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
     <div className="w-full bg-surface/90 backdrop-blur-md border-t border-white/10 p-2 max-sm:p-1.5 pb-4 max-sm:pb-3 fixed bottom-0 left-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
       <audio
         ref={audioRef}
-        src={detail.audioUrl}
+        preload="none"
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
