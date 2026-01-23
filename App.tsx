@@ -49,7 +49,6 @@ const App: React.FC = () => {
       {currentView === AppView.LANDING && (
         <LandingView 
           onEnter={handleEnter} 
-          language={language} 
           t={t} 
         />
       )}

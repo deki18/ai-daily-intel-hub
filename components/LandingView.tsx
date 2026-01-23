@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { HeadphonesIcon } from './Icons';
-import { Language } from '../src/i18n/i18n';
 
 interface LandingViewProps {
   onEnter: () => void;
-  language: Language;
   t: (key: string, params?: Record<string, string | number>) => string;
 }
 
-const LandingView: React.FC<LandingViewProps> = ({ onEnter, language, t }) => {
+const LandingView: React.FC<LandingViewProps> = ({ onEnter, t }) => {
   const [greetingKey, setGreetingKey] = useState('');
 
   useEffect(() => {
