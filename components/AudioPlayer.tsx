@@ -113,7 +113,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
   const iconSize = window.innerWidth < 640 ? 20 : 24;
 
   return (
-    <div className="w-full bg-surface/90 backdrop-blur-md border-t border-white/10 p-2 max-sm:p-1.5 pb-4 max-sm:pb-3 fixed bottom-0 left-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+    <div className="fixed bottom-0 left-0 right-0 z-[100] bg-surface/95 backdrop-blur-md border-t border-white/10 p-2 max-sm:p-1.5 pb-4 max-sm:pb-3 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
       <audio
         ref={audioRef}
         preload="none"
@@ -123,10 +123,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
         onError={handleError}
       />
 
-      <div className="w-full px-4 flex flex-col gap-2 sm:gap-3">
+      <div className="px-3 max-sm:px-2 flex flex-col gap-2 sm:gap-3">
         {/* Progress Bar */}
-        <div className="flex items-center gap-1 max-sm:gap-1 text-xs text-gray-400 font-mono">
-          <span className="min-w-[36px] max-sm:min-w-[32px] text-right">{formatTime(currentTime)}</span>
+        <div className="flex items-center gap-1 max-sm:gap-1 text-xs text-gray-400 font-mono w-full">
+          <span className="min-w-[30px] max-sm:min-w-[28px] text-right truncate">{formatTime(currentTime)}</span>
           <input
             type="range"
             min={0}
@@ -135,11 +135,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
             onChange={handleProgressChange}
             className="flex-grow h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:rounded-full"
           />
-          <span className="min-w-[36px] max-sm:min-w-[32px]">{formatTime(duration)}</span>
+          <span className="min-w-[30px] max-sm:min-w-[28px] truncate">{formatTime(duration)}</span>
         </div>
 
         {/* Controls */}
-        <div className="flex items-center justify-between max-sm:gap-2">
+        <div className="flex items-center justify-between max-sm:gap-2 w-full">
             <button 
                 onClick={cyclePlaybackRate}
                 className="text-xs font-bold text-accent border border-accent/30 rounded px-2 py-1 max-sm:w-10 hover:bg-accent/10 transition-colors"
