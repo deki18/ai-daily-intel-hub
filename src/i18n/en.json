@@ -36,5 +36,11 @@
   },
   "footer": {
     "secureConnection": "SECURE CONNECTION ESTABLISHED"
+  },
+  "contact": {
+    "contactMe": "Contact Me",
+    "thankYou": "Thank you for your interest!",
+    "description": "Thank you for using AI Daily Intel Hub! If you have any questions, suggestions or cooperation intentions, please feel free to contact me through the following email.",
+    "email": "My Email:"
   }
 }

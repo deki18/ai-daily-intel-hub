@@ -45,7 +45,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ currentLanguage, on
 
       {isOpen && (
         <div
-          className="absolute right-0 z-50 mt-2 w-32 origin-top-right rounded-md bg-surface shadow-lg ring-1 ring-white/10 animate-fade-in"
+          className="absolute right-0 z-50 mt-2 w-32 origin-top-right rounded-md bg-surface shadow-lg ring-1 ring-white/10 transition-all duration-300 ease-in-out"
         >
           <div className="py-1">
             {languages.map((language) => (

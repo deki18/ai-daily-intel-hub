@@ -36,5 +36,11 @@
   },
   "footer": {
     "secureConnection": "安全连接已建立"
+  },
+  "contact": {
+    "contactMe": "联系我",
+    "thankYou": "感谢您的关注！",
+    "description": "非常感谢您使用 AI Daily Intel Hub！如果您有任何问题、建议或合作意向，欢迎随时通过以下邮箱联系我。",
+    "email": "我的邮箱："
   }
 }

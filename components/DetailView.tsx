@@ -19,6 +19,28 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
   const [detail, setDetail] = useState<BriefingDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
+  const contactButtonRef = React.useRef<HTMLButtonElement>(null);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current && 
+        !dropdownRef.current.contains(event.target as Node) &&
+        contactButtonRef.current &&
+        !contactButtonRef.current.contains(event.target as Node)
+      ) {
+        setContactDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const loadDetail = async () => {
@@ -77,10 +99,38 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
         >
             <ChevronLeftIcon />
         </button>
-        <LanguageSelector 
-            currentLanguage={language} 
-            onLanguageChange={onLanguageChange} 
-        />
+        <div className="flex items-center gap-4 relative">
+          <LanguageSelector 
+              currentLanguage={language} 
+              onLanguageChange={onLanguageChange} 
+          />
+          
+          {/* Contact Me Button and Dropdown */}
+          <div className="relative">
+              <button
+                  ref={contactButtonRef}
+                  onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
+                  className="px-4 py-2 bg-surface border border-white/10 rounded-xl text-subtext hover:text-white hover:bg-white/5 transition-colors text-sm font-medium"
+              >
+                  {t('contact.contactMe')}
+              </button>
+              
+              {contactDropdownOpen && (
+                  <div
+                      ref={dropdownRef}
+                      className="absolute right-0 mt-2 w-80 bg-background/80 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl p-6 z-50 transition-all duration-300 ease-in-out"
+                  >
+                      <p className="text-subtext mb-4 leading-relaxed">
+                          {t('contact.description')}
+                      </p>
+                      <div className="bg-surface/50 border border-white/5 rounded-lg p-4">
+                          <p className="text-sm text-subtext mb-1">{t('contact.email')}</p>
+                          <p className="text-white font-medium break-all">a65203806@gmail.com</p>
+                      </div>
+                  </div>
+              )}
+          </div>
+        </div>
       </nav>
 
       {/* Hero Section */}

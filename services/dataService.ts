@@ -19,31 +19,29 @@ export const fetchBriefingList = async (options: FetchBriefingListOptions = {}, 
   const { page = 1, pageSize = 10, searchQuery = '' } = options;
   
   try {
-    // 构建请求URL，优先使用语言目录，如果不存在则回退到默认目录
+    // 构建请求URL，优先使用语言目录
     let url = `/data/${language}/index.json?t=${new Date().getTime()}`;
     let response = await fetch(url);
     
-    // 如果语言目录不存在，回退到默认目录
+    // 如果语言目录不存在，不回退到默认目录，直接抛出错误
+    // 这样可以确保获取到正确语言的数据
     if (!response.ok) {
-      url = `/data/index.json?t=${new Date().getTime()}`;
-      response = await fetch(url);
-    }
-    
-    if (!response.ok) {
+      console.error(`Failed to fetch ${language} index.json: HTTP error! status: ${response.status}`);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
     let data;
     try {
       data = await response.json();
+      console.log(`Successfully fetched ${language} index.json with ${data.length} items`);
     } catch (parseError) {
-      console.error('JSON parse error for index.json:', parseError);
-      throw new Error(`Invalid JSON format in index.json: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`);
+      console.error(`JSON parse error for ${language}/index.json:`, parseError);
+      throw new Error(`Invalid JSON format in ${language}/index.json: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`);
     }
     
     // Validate the data structure
     if (!Array.isArray(data)) {
-      throw new Error('Invalid data format: expected array');
+      throw new Error(`Invalid data format for ${language}/index.json: expected array`);
     }
     
     // Validate each briefing file exists
@@ -238,17 +236,14 @@ async function getArchiveFileList(): Promise<string[]> {
 // Fetch briefing detail from local JSON file
 export const fetchBriefingDetail = async (id: string, language: Language = 'zh'): Promise<BriefingDetail> => {
   try {
-    // 构建请求URL，优先使用语言目录，如果不存在则回退到默认目录
+    // 构建请求URL，优先使用语言目录
     let url = `/data/${language}/archive/${id}.json?t=${new Date().getTime()}`;
     let response = await fetch(url);
     
-    // 如果语言目录不存在，回退到默认目录
+    // 如果语言目录不存在，不回退到默认目录，直接抛出错误
+    // 这样可以确保获取到正确语言的数据
     if (!response.ok) {
-      url = `/data/archive/${id}.json?t=${new Date().getTime()}`;
-      response = await fetch(url);
-    }
-    
-    if (!response.ok) {
+      console.error(`Failed to fetch ${language}/archive/${id}.json: HTTP error! status: ${response.status}`);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
