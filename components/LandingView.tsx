@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { HeadphonesIcon } from './Icons';
 
 interface LandingViewProps {
@@ -7,15 +7,6 @@ interface LandingViewProps {
 }
 
 const LandingView: React.FC<LandingViewProps> = ({ onEnter, t }) => {
-  const [greetingKey, setGreetingKey] = useState('');
-
-  useEffect(() => {
-    const hours = new Date().getHours();
-    if (hours < 12) setGreetingKey('greeting.morning');
-    else if (hours < 18) setGreetingKey('greeting.afternoon');
-    else setGreetingKey('greeting.evening');
-  }, []);
-
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-background relative overflow-hidden">
         {/* Abstract Background Element */}
@@ -27,13 +18,18 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnter, t }) => {
                 <HeadphonesIcon size={32} className="text-accent" />
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500">
-                {t(greetingKey)}
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+                {t('landing.title')}
             </h1>
 
-            <p className="text-subtext max-w-md text-sm md:text-base tracking-wide uppercase font-light">
-                {t('landing.subtitle')}
-            </p>
+            <div className="space-y-1">
+                <p className="text-subtext max-w-md text-sm md:text-base tracking-wide uppercase font-light">
+                    {t('landing.subtitle1')}
+                </p>
+                <p className="text-subtext max-w-md text-sm md:text-base tracking-wide uppercase font-light">
+                    {t('landing.subtitle2')}
+                </p>
+            </div>
 
             <button 
                 onClick={onEnter}
@@ -46,10 +42,6 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnter, t }) => {
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </span>
             </button>
-        </div>
-
-        <div className="absolute bottom-8 text-xs text-gray-700 font-mono">
-            {t('footer.secureConnection')}
         </div>
     </div>
   );

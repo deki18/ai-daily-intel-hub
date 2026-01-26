@@ -1,16 +1,13 @@
 {
-  "greeting": {
-    "morning": "早上好，探索者",
-    "afternoon": "下午好，探索者",
-    "evening": "晚上好，探索者"
-  },
   "landing": {
-    "subtitle": "您的每日情报简报已准备就绪。",
+    "title": "新闻情报站",
+    "subtitle1": "让您一站式获取最新全球消息",
+    "subtitle2": "每天30条关键情报更新",
     "accessButton": "访问情报"
   },
   "list": {
-    "title": "最新简报",
-    "description": "过去24小时的深度分析和情报报告。",
+    "title": "最新简报 - 点击想要查看的日期获取当天情报",
+    "description": "每一条情报都可追溯消息源，点击收听语音播报",
     "searchPlaceholder": "搜索简报...",
     "pagination": "显示第 {{start}} 到 {{end}} 条，共 {{total}} 条简报",
     "noResults": "未找到简报",
@@ -33,9 +30,6 @@
     "chinese": "中文",
     "english": "English",
     "switchLanguage": "切换语言"
-  },
-  "footer": {
-    "secureConnection": "安全连接已建立"
   },
   "contact": {
     "contactMe": "联系我",
