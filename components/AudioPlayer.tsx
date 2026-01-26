@@ -113,7 +113,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
   const iconSize = window.innerWidth < 640 ? 20 : 24;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[100] bg-surface/95 backdrop-blur-md border-t border-white/10 p-2 max-sm:p-1.5 pb-4 max-sm:pb-3 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+    <div className="fixed bottom-0 left-0 right-0 z-[100] bg-surface/95 backdrop-blur-md border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] safe-area-pb">
       <audio
         ref={audioRef}
         preload="none"
@@ -123,9 +123,9 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
         onError={handleError}
       />
 
-      <div className="px-3 max-sm:px-2 flex flex-col gap-2 sm:gap-3">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 py-3 sm:py-4">
         {/* Progress Bar */}
-        <div className="flex items-center gap-1 max-sm:gap-1 text-xs text-gray-400 font-mono w-full">
+        <div className="flex items-center gap-2 sm:gap-3 text-xs text-gray-400 font-mono w-full mb-2 sm:mb-3">
           <span className="min-w-[30px] max-sm:min-w-[28px] text-right truncate">{formatTime(currentTime)}</span>
           <input
             type="range"
@@ -139,33 +139,33 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
         </div>
 
         {/* Controls */}
-        <div className="flex items-center justify-between max-sm:gap-2 w-full">
+        <div className="flex items-center justify-between gap-2 sm:gap-4">
             <button 
                 onClick={cyclePlaybackRate}
-                className="text-xs font-bold text-accent border border-accent/30 rounded px-2 py-1 max-sm:w-10 hover:bg-accent/10 transition-colors"
+                className="text-xs font-bold text-accent border border-accent/30 rounded px-2 py-1 max-sm:w-10 hover:bg-accent/10 transition-colors shrink-0"
             >
                 {playbackRate}x
             </button>
 
-            <div className="flex items-center gap-3 max-sm:gap-2">
-                <button onClick={() => skip(-15)} className="text-gray-400 hover:text-white transition-colors">
+            <div className="flex items-center gap-3 sm:gap-4">
+                <button onClick={() => skip(-15)} className="text-gray-400 hover:text-white transition-colors p-1">
                     <RewindIcon size={iconSize} />
                 </button>
 
                 <button
                     onClick={togglePlay}
-                    className="bg-accent text-black rounded-full p-2.5 max-sm:p-2 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                    className="bg-accent text-black rounded-full p-2.5 sm:p-3 hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.4)]"
                 >
-                    {isPlaying ? <PauseIcon size={iconSize} /> : <PlayIcon size={iconSize} className="ml-1" />}
+                    {isPlaying ? <PauseIcon size={iconSize} /> : <PlayIcon size={iconSize} className="ml-0.5" />}
                 </button>
 
-                <button onClick={() => skip(15)} className="text-gray-400 hover:text-white transition-colors">
+                <button onClick={() => skip(15)} className="text-gray-400 hover:text-white transition-colors p-1">
                     <FastForwardIcon size={iconSize} />
                 </button>
             </div>
 
-            {/* Placeholder for symmetry or volume on desktop */}
-            <div className="w-12 max-sm:w-10"></div>
+            {/* Placeholder for symmetry */}
+            <div className="w-10 max-sm:hidden shrink-0"></div>
         </div>
       </div>
     </div>

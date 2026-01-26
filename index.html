@@ -65,6 +65,16 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #555;
       }
+
+      /* Audio Player Safe Area */
+      .safe-area-pb {
+        padding-bottom: env(safe-area-inset-bottom, 20px);
+      }
+
+      /* Ensure content doesn't get hidden behind fixed player */
+      .player-spacer {
+        padding-bottom: 120px;
+      }
     </style>
 <script type="importmap">
 {

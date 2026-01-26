@@ -84,7 +84,7 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
   }
 
   return (
-    <div className="min-h-screen bg-background text-text pb-32 animate-fade-in relative">
+    <div className="min-h-screen bg-background text-text pb-36 md:pb-32 animate-fade-in relative player-spacer">
       {/* Background Ambience */}
       <div className="fixed inset-0 z-0 opacity-20 pointer-events-none">
          <img src={detail.coverImage} className="w-full h-full object-cover blur-3xl" alt="" />
