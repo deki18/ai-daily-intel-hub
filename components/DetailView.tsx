@@ -157,6 +157,7 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
       <AudioPlayer 
         detail={detail} 
         t={t} 
+        autoPlay={true}
       />
     </div>
   );

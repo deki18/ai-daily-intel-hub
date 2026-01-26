@@ -5,14 +5,33 @@ import { BriefingDetail } from '../types';
 interface AudioPlayerProps {
   detail: BriefingDetail;
   t: (key: string, params?: Record<string, string | number>) => string;
+  autoPlay?: boolean;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t, autoPlay = false }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1.0);
+  const hasAutoPlayed = useRef(false);
+
+  // Auto-play immediately when detail loads
+  useEffect(() => {
+    if (autoPlay && detail?.audioUrl && !hasAutoPlayed.current) {
+      if (audioRef.current) {
+        audioRef.current.src = detail.audioUrl;
+        audioRef.current.play()
+          .then(() => {
+            setIsPlaying(true);
+            hasAutoPlayed.current = true;
+          })
+          .catch(error => {
+            console.warn('Auto-play failed:', error);
+          });
+      }
+    }
+  }, [autoPlay, detail]);
 
   // Setup Media Session API for lock screen controls
   useEffect(() => {
@@ -41,7 +60,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ detail, t }) => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        // Set the audio source only when user clicks play
         if (!audioRef.current.src.includes(detail.audioUrl)) {
           audioRef.current.src = detail.audioUrl;
         }
