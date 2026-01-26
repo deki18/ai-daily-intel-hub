@@ -90,7 +90,6 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLa
                     currentLanguage={language} 
                     onLanguageChange={onLanguageChange} 
                 />
-                <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
                 
                 {/* Contact Me Button and Dropdown */}
                 <div className="relative">
