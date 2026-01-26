@@ -92,25 +92,26 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
       </div>
 
       {/* Header / Nav */}
-      <nav className="fixed top-0 w-full z-40 px-4 py-4 md:px-8 md:py-6 flex items-center justify-between">
-        <button 
-            onClick={onBack}
-            className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
-        >
-            <ChevronLeftIcon />
-        </button>
-        <div className="flex items-center gap-4 relative">
-          <LanguageSelector 
-              currentLanguage={language} 
-              onLanguageChange={onLanguageChange} 
-          />
+      <div className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-white/5 px-4 md:px-8 py-4 md:py-6">
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <button 
+              onClick={onBack}
+              className="w-10 h-10 rounded-full bg-surface/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors shrink-0"
+          >
+              <ChevronLeftIcon />
+          </button>
+          <div className="flex items-center gap-2 md:gap-4">
+            <LanguageSelector 
+                currentLanguage={language} 
+                onLanguageChange={onLanguageChange} 
+            />
           
           {/* Contact Me Button and Dropdown */}
           <div className="relative">
               <button
                   ref={contactButtonRef}
                   onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
-                  className="px-4 py-2 bg-surface border border-white/10 rounded-xl text-subtext hover:text-white hover:bg-white/5 transition-colors text-sm font-medium"
+                  className="px-3 py-2 md:px-4 md:py-2 bg-surface border border-white/10 rounded-xl text-subtext hover:text-white hover:bg-white/5 transition-colors text-sm font-medium whitespace-nowrap"
               >
                   {t('contact.contactMe')}
               </button>
@@ -131,7 +132,8 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
               )}
           </div>
         </div>
-      </nav>
+      </div>
+      </div>
 
       {/* Hero Section */}
       <div className="relative z-10 pt-20 px-4 md:px-8 max-w-3xl mx-auto">
