@@ -1,5 +1,13 @@
 [
   {
+    "id": "2026-01-30",
+    "date": "2026-01-30",
+    "title": "Latest news, political and military related",
+    "path": "/data/en/archive/2026-01-30.json",
+    "summary": "Welcome to the Daily News Channel, I'm Joe. The past 24 hours have seen a series of dramatic developments in global politics and military affairs: the US has introduced new policies in Latin America and the Middle East, with the Trump administration once again combining tariffs, sanctions, and military deterrence; there are signs of a breakthrough in the Russia-Ukraine negotiations; Europe faces supply chain crises and security dilemmas; and tensions continue in Asia over Taiwan, North Korea, and the South China Sea. I will now break down these key news items for you, helping you quickly grasp the core points.",
+    "coverImage": "https://picsum.photos/seed/2026-01-30/800/600"
+  },
+  {
     "id": "2026-01-29",
     "date": "2026-01-29",
     "title": "Latest global political and military news",
