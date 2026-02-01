@@ -47,3 +47,41 @@ export const SearchIcon: React.FC<IconProps> = ({ size = 24, className = "" }) =
     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
   </svg>
 );
+
+// Logo Icon - AI Daily Intel Hub
+// Design concept: A stylized brain/neural network combined with a document/page
+export const LogoIcon: React.FC<IconProps> = ({ size = 32, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 32 32" fill="none" className={className}>
+    {/* Outer hexagon frame - representing structure and intelligence */}
+    <path
+      d="M16 2L28 9V23L16 30L4 23V9L16 2Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    {/* Inner neural network nodes */}
+    <circle cx="16" cy="12" r="2.5" fill="currentColor" />
+    <circle cx="10" cy="18" r="2" fill="currentColor" />
+    <circle cx="22" cy="18" r="2" fill="currentColor" />
+    <circle cx="16" cy="23" r="1.5" fill="currentColor" />
+    {/* Connection lines */}
+    <path
+      d="M16 14.5V15.5M13.5 16.5L11.5 17.5M18.5 16.5L20.5 17.5M14.5 21L15.5 22.5M17.5 21L16.5 22.5"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+    />
+    {/* Pulse ring - representing daily updates */}
+    <circle
+      cx="16"
+      cy="16"
+      r="12"
+      stroke="currentColor"
+      strokeWidth="0.5"
+      strokeDasharray="2 4"
+      opacity="0.5"
+    />
+  </svg>
+);

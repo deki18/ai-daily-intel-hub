@@ -4,6 +4,7 @@ export interface DailyBriefing {
   title: string;
   summary: string;
   coverImage: string;
+  audioUrl?: string; // Optional audio URL for list view playback
 }
 
 export interface BriefingDetail extends DailyBriefing {
