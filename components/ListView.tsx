@@ -25,8 +25,11 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
   const [total, setTotal] = useState(0);
   const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<Category>('politics');
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const contactButtonRef = React.useRef<HTMLButtonElement>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const feedbackModalRef = React.useRef<HTMLDivElement>(null);
 
   // Audio player state
   const [playingId, setPlayingId] = useState<string | null>(null);
@@ -34,7 +37,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Close dropdown when clicking outside
+  // Close dropdown and modal when clicking outside
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -44,6 +47,13 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
         !contactButtonRef.current.contains(event.target as Node)
       ) {
         setContactDropdownOpen(false);
+      }
+      
+      if (
+        feedbackModalRef.current && 
+        !feedbackModalRef.current.contains(event.target as Node)
+      ) {
+        setFeedbackModalOpen(false);
       }
     };
 
@@ -154,13 +164,19 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
             <div className="h-12 flex items-center justify-between px-4 md:px-8 max-w-7xl mx-auto">
                 <div className="flex items-center gap-2">
                     <LogoIcon size={20} className="text-accent" />
-                    <span className="text-sm font-bold text-white tracking-wider">AI DAILY INTEL</span>
+                    <span className="text-sm font-bold text-white tracking-wider">JOE'S DAILY INTEL</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <LanguageSelector 
                         currentLanguage={language} 
                         onLanguageChange={onLanguageChange} 
                     />
+                    <button
+                        onClick={() => setFeedbackModalOpen(true)}
+                        className="text-xs text-subtext hover:text-white transition-colors uppercase tracking-wider"
+                    >
+                        {language === 'zh' ? '反馈' : 'Feedback'}
+                    </button>
                     <button
                         ref={contactButtonRef}
                         onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
@@ -429,6 +445,115 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
                     </div>
                 )}
             </>
+        )}
+
+        {/* Feedback Modal */}
+        {feedbackModalOpen && (
+            <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+                <div 
+                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                    onClick={() => setFeedbackModalOpen(false)}
+                />
+                <div 
+                    ref={feedbackModalRef}
+                    className="relative bg-surface border border-white/10 rounded-2xl shadow-2xl w-full max-w-md p-6 animate-fade-in"
+                >
+                    {!feedbackSubmitted ? (
+                        <>
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="text-xl font-bold text-white">
+                                    {language === 'zh' ? '提交反馈' : 'Submit Feedback'}
+                                </h3>
+                                <button
+                                    onClick={() => setFeedbackModalOpen(false)}
+                                    className="text-subtext hover:text-white transition-colors"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <form 
+                                action="https://formsubmit.co/a65203806@gmail.com" 
+                                method="POST"
+                                onSubmit={() => setFeedbackSubmitted(true)}
+                            >
+                                {/* Disable captcha */}
+                                <input type="hidden" name="_captcha" value="false" />
+                                {/* Redirect back to site after submission */}
+                                <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
+                                {/* Subject line */}
+                                <input type="hidden" name="_subject" value="AI Daily Intel Hub - New Feedback" />
+                                
+                                <div className="mb-4">
+                                    <label className="block text-sm text-subtext mb-2">
+                                        {language === 'zh' ? '您的邮箱（可选）' : 'Your Email (Optional)'}
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        placeholder={language === 'zh' ? 'example@email.com' : 'example@email.com'}
+                                        className="w-full px-4 py-3 bg-background border border-white/10 rounded-xl text-white text-sm placeholder-subtext focus:outline-none focus:border-accent/40 transition-colors"
+                                    />
+                                </div>
+                                
+                                <div className="mb-6">
+                                    <label className="block text-sm text-subtext mb-2">
+                                        {language === 'zh' ? '您的反馈 *' : 'Your Feedback *'}
+                                    </label>
+                                    <textarea
+                                        name="message"
+                                        required
+                                        rows={5}
+                                        placeholder={language === 'zh' ? '请输入您的问题、建议或反馈...' : 'Please enter your questions, suggestions, or feedback...'}
+                                        className="w-full px-4 py-3 bg-background border border-white/10 rounded-xl text-white text-sm placeholder-subtext focus:outline-none focus:border-accent/40 transition-colors resize-none"
+                                    />
+                                </div>
+                                
+                                <div className="flex gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => setFeedbackModalOpen(false)}
+                                        className="flex-1 px-4 py-3 border border-white/10 rounded-xl text-subtext hover:text-white hover:bg-white/5 transition-colors text-sm font-medium"
+                                    >
+                                        {language === 'zh' ? '取消' : 'Cancel'}
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="flex-1 px-4 py-3 bg-accent text-black rounded-xl hover:bg-accent/90 transition-colors text-sm font-medium"
+                                    >
+                                        {language === 'zh' ? '提交' : 'Submit'}
+                                    </button>
+                                </div>
+                            </form>
+                        </>
+                    ) : (
+                        <div className="text-center py-8">
+                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/20 flex items-center justify-center">
+                                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-2">
+                                {language === 'zh' ? '感谢您的反馈！' : 'Thank You for Your Feedback!'}
+                            </h3>
+                            <p className="text-subtext text-sm mb-6">
+                                {language === 'zh' ? '我们会尽快查看您的反馈。' : 'We will review your feedback as soon as possible.'}
+                            </p>
+                            <button
+                                onClick={() => {
+                                    setFeedbackModalOpen(false);
+                                    setFeedbackSubmitted(false);
+                                }}
+                                className="px-6 py-3 bg-accent text-black rounded-xl hover:bg-accent/90 transition-colors text-sm font-medium"
+                            >
+                                {language === 'zh' ? '关闭' : 'Close'}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
         )}
     </div>
   );
