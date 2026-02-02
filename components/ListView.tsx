@@ -13,7 +13,9 @@ interface ListViewProps {
   onLanguageChange: (language: Language) => void;
 }
 
-const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLanguageChange }) => {
+type Category = 'politics' | 'economy' | 'technology';
+
+const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, language, onLanguageChange }) => {
   const [briefings, setBriefings] = useState<DailyBriefing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +24,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLa
   const [pageSize] = useState(6); // Set to 6 to match 3-column grid
   const [total, setTotal] = useState(0);
   const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<Category>('politics');
   const contactButtonRef = React.useRef<HTMLButtonElement>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
@@ -181,16 +184,37 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLa
                 </div>
             </div>
             
-            {/* Category Navigation - Future categories: Politics & Military, Economy, Technology */}
+            {/* Category Navigation - Politics & Military, Economy, Technology */}
             <nav className="border-t border-white/5">
                 <div className="flex items-center justify-center gap-8 h-10 px-4 max-w-7xl mx-auto">
-                    <button className="text-xs text-white font-medium uppercase tracking-widest border-b-2 border-accent h-full flex items-center">
+                    <button 
+                        onClick={() => setActiveCategory('politics')}
+                        className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
+                            activeCategory === 'politics' 
+                                ? 'text-white font-medium border-b-2 border-accent' 
+                                : 'text-subtext hover:text-white'
+                        }`}
+                    >
                         {language === 'zh' ? '政治与军事' : 'Politics & Military'}
                     </button>
-                    <button className="text-xs text-subtext hover:text-white transition-colors uppercase tracking-widest h-full flex items-center">
+                    <button 
+                        onClick={() => setActiveCategory('economy')}
+                        className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
+                            activeCategory === 'economy' 
+                                ? 'text-white font-medium border-b-2 border-accent' 
+                                : 'text-subtext hover:text-white'
+                        }`}
+                    >
                         {language === 'zh' ? '经济' : 'Economy'}
                     </button>
-                    <button className="text-xs text-subtext hover:text-white transition-colors uppercase tracking-widest h-full flex items-center">
+                    <button 
+                        onClick={() => setActiveCategory('technology')}
+                        className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
+                            activeCategory === 'technology' 
+                                ? 'text-white font-medium border-b-2 border-accent' 
+                                : 'text-subtext hover:text-white'
+                        }`}
+                    >
                         {language === 'zh' ? '科技' : 'Technology'}
                     </button>
                 </div>
@@ -221,8 +245,31 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack, t, language, onLa
             </div>
         </div>
 
-        {/* Content based on loading/error state */}
-        {loading ? (
+        {/* Content based on loading/error state and active category */}
+        {activeCategory !== 'politics' ? (
+            // Economy and Technology categories - Coming Soon
+            <div className="flex flex-col items-center justify-center py-24 px-4">
+                <div className="w-20 h-20 mb-6 rounded-full bg-surface border border-white/10 flex items-center justify-center">
+                    <svg className="w-10 h-10 text-accent/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-3">
+                    {language === 'zh' ? '情报正在准备中' : 'Intelligence is Being Prepared'}
+                </h2>
+                <p className="text-subtext text-center max-w-md mb-6">
+                    {language === 'zh' 
+                        ? `${activeCategory === 'economy' ? '经济' : '科技'}板块的内容正在紧张筹备中，敬请期待...`
+                        : `The ${activeCategory === 'economy' ? 'Economy' : 'Technology'} section is being prepared. Stay tuned...`}
+                </p>
+                <button
+                    onClick={() => setActiveCategory('politics')}
+                    className="px-6 py-3 bg-accent text-black font-medium rounded-full hover:bg-accent/90 transition-colors"
+                >
+                    {language === 'zh' ? '返回政治与军事' : 'Back to Politics & Military'}
+                </button>
+            </div>
+        ) : loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[1, 2, 3].map(i => (
                     <div key={i} className="h-80 w-full bg-surface rounded-2xl animate-pulse border border-white/5"></div>
