@@ -145,17 +145,17 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
   };
 
   return (
-    <div className="min-h-screen bg-background pt-20 pb-20 px-4 md:px-8 max-w-6xl mx-auto animate-fade-in">
+    <div className="min-h-screen bg-background pt-16 pb-20 px-4 md:px-8 max-w-6xl mx-auto animate-fade-in">
         {/* Top Navigation Bar - Economist Style */}
         <header className="fixed top-0 left-0 right-0 bg-background z-50 border-b border-white/10">
             {/* Upper Header */}
-            <div className="h-12 grid grid-cols-3 items-center px-4 md:px-8 max-w-7xl mx-auto">
+            <div className="h-10 grid grid-cols-3 items-center px-4 md:px-8 max-w-7xl mx-auto">
                 {/* Left - Empty for balance */}
                 <div></div>
                 {/* Center - Logo */}
                 <div className="flex items-center justify-center gap-2">
-                    <LogoIcon size={20} className="text-accent" />
-                    <span className="text-sm font-bold text-white tracking-wider">JOE'S DAILY INTEL</span>
+                    <LogoIcon size={24} className="text-accent" />
+                    <span className="text-base font-bold text-white tracking-wider">JOE'S DAILY INTEL</span>
                 </div>
                 {/* Right - Language & Feedback */}
                 <div className="flex items-center justify-end gap-3">
@@ -174,7 +174,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
             
             {/* Category Navigation - Politics & Military, Economy, Technology */}
             <nav className="border-t border-white/5">
-                <div className="flex items-center justify-center gap-8 h-10 px-4 max-w-7xl mx-auto">
+                <div className="flex items-center justify-center gap-8 h-8 px-4 max-w-7xl mx-auto">
                     <button 
                         onClick={() => setActiveCategory('politics')}
                         className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
@@ -210,12 +210,12 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
         </header>
 
         {/* Hero Section - Economist Style */}
-        <div className="pt-28 pb-6 text-center border-b border-white/5">
+        <div className="pt-20 pb-6 text-center border-b border-white/5">
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight mb-2">
                 {t('landing.title')}
             </h1>
             <p className="text-subtext text-sm uppercase tracking-[0.3em]">
-                {t('landing.subtitle1')} · {t('landing.subtitle2')}
+                {t('landing.subtitle1')}
             </p>
             
             {/* Search Bar - Centered */}

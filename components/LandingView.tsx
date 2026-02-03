@@ -22,14 +22,9 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnter, t }) => {
                 {t('landing.title')}
             </h1>
 
-            <div className="space-y-1">
-                <p className="text-subtext max-w-md text-sm md:text-base tracking-wide uppercase font-light">
-                    {t('landing.subtitle1')}
-                </p>
-                <p className="text-subtext max-w-md text-sm md:text-base tracking-wide uppercase font-light">
-                    {t('landing.subtitle2')}
-                </p>
-            </div>
+            <p className="text-subtext max-w-md text-sm md:text-base tracking-wide uppercase font-light">
+                {t('landing.subtitle1')}
+            </p>
 
             <button 
                 onClick={onEnter}
