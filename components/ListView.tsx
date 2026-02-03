@@ -23,12 +23,9 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
   const [page, setPage] = useState(1);
   const [pageSize] = useState(6); // Set to 6 to match 3-column grid
   const [total, setTotal] = useState(0);
-  const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<Category>('politics');
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
-  const contactButtonRef = React.useRef<HTMLButtonElement>(null);
-  const dropdownRef = React.useRef<HTMLDivElement>(null);
   const feedbackModalRef = React.useRef<HTMLDivElement>(null);
 
   // Audio player state
@@ -37,18 +34,9 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Close dropdown and modal when clicking outside
+  // Close modal when clicking outside
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current && 
-        !dropdownRef.current.contains(event.target as Node) &&
-        contactButtonRef.current &&
-        !contactButtonRef.current.contains(event.target as Node)
-      ) {
-        setContactDropdownOpen(false);
-      }
-      
       if (
         feedbackModalRef.current && 
         !feedbackModalRef.current.contains(event.target as Node)
@@ -161,12 +149,16 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
         {/* Top Navigation Bar - Economist Style */}
         <header className="fixed top-0 left-0 right-0 bg-background z-50 border-b border-white/10">
             {/* Upper Header */}
-            <div className="h-12 flex items-center justify-between px-4 md:px-8 max-w-7xl mx-auto">
-                <div className="flex items-center gap-2">
+            <div className="h-12 grid grid-cols-3 items-center px-4 md:px-8 max-w-7xl mx-auto">
+                {/* Left - Empty for balance */}
+                <div></div>
+                {/* Center - Logo */}
+                <div className="flex items-center justify-center gap-2">
                     <LogoIcon size={20} className="text-accent" />
                     <span className="text-sm font-bold text-white tracking-wider">JOE'S DAILY INTEL</span>
                 </div>
-                <div className="flex items-center gap-3">
+                {/* Right - Language & Feedback */}
+                <div className="flex items-center justify-end gap-3">
                     <LanguageSelector 
                         currentLanguage={language} 
                         onLanguageChange={onLanguageChange} 
@@ -177,26 +169,6 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
                     >
                         {language === 'zh' ? '反馈' : 'Feedback'}
                     </button>
-                    <button
-                        ref={contactButtonRef}
-                        onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
-                        className="text-xs text-subtext hover:text-white transition-colors uppercase tracking-wider"
-                    >
-                        {t('contact.contactMe')}
-                    </button>
-                    
-                    {contactDropdownOpen && (
-                        <div
-                            ref={dropdownRef}
-                            className="absolute right-4 top-12 mt-2 w-72 bg-background border border-white/10 rounded-lg shadow-2xl p-5 z-[60]"
-                        >
-                            <p className="text-subtext text-sm mb-3">{t('contact.description')}</p>
-                            <div className="bg-surface/50 rounded-md p-3">
-                                <p className="text-xs text-subtext mb-1">{t('contact.email')}</p>
-                                <p className="text-white text-sm font-medium">a65203806@gmail.com</p>
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
             

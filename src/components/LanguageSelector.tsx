@@ -26,7 +26,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ currentLanguage, on
     <div className="relative inline-block text-left">
       <button
         type="button"
-        className="inline-flex items-center justify-center w-full rounded-md border border-white/10 bg-black/20 px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent"
+        className="inline-flex items-center justify-center w-full rounded-md border border-white/10 bg-black/20 px-3 py-1.5 text-xs font-medium text-subtext hover:text-white hover:bg-white/10 focus:outline-none transition-colors uppercase tracking-wider"
         onClick={toggleDropdown}
       >
         {languages.find(lang => lang.code === currentLanguage)?.name}
