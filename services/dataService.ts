@@ -20,8 +20,12 @@ export interface BriefingListResult {
 export const checkCategoryExists = async (category: Category, language: Language = 'zh'): Promise<boolean> => {
   try {
     const url = `/data/${language}/${category}/index.json?t=${new Date().getTime()}`;
-    const response = await fetch(url, { method: 'HEAD' });
-    return response.ok;
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      return Array.isArray(data);
+    }
+    return false;
   } catch {
     return false;
   }
