@@ -1,4 +1,4 @@
-import { DailyBriefing, BriefingDetail } from '../types';
+import { DailyBriefing, BriefingDetail, Category } from '../types';
 import { Language } from '../src/i18n/i18n';
 
 // Fetch briefing list from local JSON file with file existence validation
@@ -6,6 +6,7 @@ export interface FetchBriefingListOptions {
   page?: number;
   pageSize?: number;
   searchQuery?: string;
+  category?: Category;
 }
 
 export interface BriefingListResult {
@@ -15,33 +16,55 @@ export interface BriefingListResult {
   pageSize: number;
 }
 
+// 检查板块数据目录是否存在
+export const checkCategoryExists = async (category: Category, language: Language = 'zh'): Promise<boolean> => {
+  try {
+    const url = `/data/${language}/${category}/index.json?t=${new Date().getTime()}`;
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok;
+  } catch {
+    return false;
+  }
+};
+
 export const fetchBriefingList = async (options: FetchBriefingListOptions = {}, language: Language = 'zh'): Promise<BriefingListResult> => {
-  const { page = 1, pageSize = 10, searchQuery = '' } = options;
+  const { page = 1, pageSize = 10, searchQuery = '', category = 'politics' } = options;
   
   try {
-    // 构建请求URL，优先使用语言目录
-    let url = `/data/${language}/index.json?t=${new Date().getTime()}`;
+    // 构建请求URL，使用新的板块目录结构
+    let url = `/data/${language}/${category}/index.json?t=${new Date().getTime()}`;
     let response = await fetch(url);
     
+    // 如果新结构不存在，回退到旧结构（兼容现有数据）
+    if (!response.ok && category === 'politics') {
+      url = `/data/${language}/index.json?t=${new Date().getTime()}`;
+      response = await fetch(url);
+    }
+    
     // 如果语言目录不存在，不回退到默认目录，直接抛出错误
-    // 这样可以确保获取到正确语言的数据
     if (!response.ok) {
-      console.error(`Failed to fetch ${language} index.json: HTTP error! status: ${response.status}`);
-      throw new Error(`HTTP error! status: ${response.status}`);
+      console.error(`Failed to fetch ${language}/${category}/index.json: HTTP error! status: ${response.status}`);
+      // 返回空数据而不是报错，这样新板块可以显示"准备中"状态
+      return {
+        data: [],
+        total: 0,
+        page,
+        pageSize
+      };
     }
     
     let data;
     try {
       data = await response.json();
-      console.log(`Successfully fetched ${language} index.json with ${data.length} items`);
+      console.log(`Successfully fetched ${language}/${category}/index.json with ${data.length} items`);
     } catch (parseError) {
-      console.error(`JSON parse error for ${language}/index.json:`, parseError);
-      throw new Error(`Invalid JSON format in ${language}/index.json: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`);
+      console.error(`JSON parse error for ${language}/${category}/index.json:`, parseError);
+      throw new Error(`Invalid JSON format in ${language}/${category}/index.json: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`);
     }
     
     // Validate the data structure
     if (!Array.isArray(data)) {
-      throw new Error(`Invalid data format for ${language}/index.json: expected array`);
+      throw new Error(`Invalid data format for ${language}/${category}/index.json: expected array`);
     }
     
     // Validate each briefing file exists
@@ -157,7 +180,8 @@ export const syncIndexWithArchive = async (language: Language = 'zh'): Promise<v
                 date: fileData.date || new Date().toISOString().split('T')[0],
                 title: fileData.title || `Briefing ${id}`,
                 summary: fileData.summary || `Summary for briefing ${id}`,
-                coverImage: fileData.coverImage || `https://picsum.photos/800/600?random=${Math.random()}`
+                coverImage: fileData.coverImage || `https://picsum.photos/800/600?random=${Math.random()}`,
+                category: fileData.category || 'politics'
               };
               
               newIndex.push(newEntry);
@@ -234,16 +258,21 @@ async function getArchiveFileList(): Promise<string[]> {
 };
 
 // Fetch briefing detail from local JSON file
-export const fetchBriefingDetail = async (id: string, language: Language = 'zh'): Promise<BriefingDetail> => {
+export const fetchBriefingDetail = async (id: string, language: Language = 'zh', category: Category = 'politics'): Promise<BriefingDetail> => {
   try {
-    // 构建请求URL，优先使用语言目录
-    let url = `/data/${language}/archive/${id}.json?t=${new Date().getTime()}`;
+    // 构建请求URL，优先使用新的板块目录结构
+    let url = `/data/${language}/${category}/archive/${id}.json?t=${new Date().getTime()}`;
     let response = await fetch(url);
     
+    // 如果新结构不存在，回退到旧结构（兼容现有数据）
+    if (!response.ok && category === 'politics') {
+      url = `/data/${language}/archive/${id}.json?t=${new Date().getTime()}`;
+      response = await fetch(url);
+    }
+    
     // 如果语言目录不存在，不回退到默认目录，直接抛出错误
-    // 这样可以确保获取到正确语言的数据
     if (!response.ok) {
-      console.error(`Failed to fetch ${language}/archive/${id}.json: HTTP error! status: ${response.status}`);
+      console.error(`Failed to fetch ${language}/${category}/archive/${id}.json: HTTP error! status: ${response.status}`);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     

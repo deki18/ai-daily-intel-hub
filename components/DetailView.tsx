@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BriefingDetail } from '../types';
+import { BriefingDetail, Category } from '../types';
 import { fetchBriefingDetail } from '../services/dataService';
 import AudioPlayer from './AudioPlayer';
 import MarkdownRenderer from './MarkdownRenderer';
@@ -13,9 +13,10 @@ interface DetailViewProps {
   language: Language;
   t: (key: string, params?: Record<string, string | number>) => string;
   onLanguageChange: (language: Language) => void;
+  category?: Category;
 }
 
-const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLanguageChange }) => {
+const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLanguageChange, category = 'politics' }) => {
   const [detail, setDetail] = useState<BriefingDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +27,7 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
       try {
         setLoading(true);
         setError(null);
-        const data = await fetchBriefingDetail(id, language);
+        const data = await fetchBriefingDetail(id, language, category);
         setDetail(data);
       } catch (err) {
         console.error('Failed to load briefing detail:', err);
@@ -37,7 +38,7 @@ const DetailView: React.FC<DetailViewProps> = ({ id, onBack, language, t, onLang
     };
 
     loadDetail();
-  }, [id, language]);
+  }, [id, language, category]);
 
   if (loading) {
     return (

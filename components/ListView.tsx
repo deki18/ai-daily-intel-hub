@@ -1,19 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { DailyBriefing } from '../types';
-import { fetchBriefingList } from '../services/dataService';
+import { DailyBriefing, Category, CATEGORY_CONFIG } from '../types';
+import { fetchBriefingList, checkCategoryExists } from '../services/dataService';
 import { SearchIcon, LogoIcon, PlayIcon, PauseIcon } from './Icons';
 import LanguageSelector from '../src/components/LanguageSelector';
 import { Language } from '../src/i18n/i18n';
 
 interface ListViewProps {
-  onSelect: (id: string) => void;
+  onSelect: (id: string, category: Category) => void;
   onBack: () => void;
   t: (key: string, params?: Record<string, string | number>) => string;
   language: Language;
   onLanguageChange: (language: Language) => void;
 }
-
-type Category = 'politics' | 'economy' | 'technology';
 
 const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, language, onLanguageChange }) => {
   const [briefings, setBriefings] = useState<DailyBriefing[]>([]);
@@ -24,6 +22,11 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
   const [pageSize] = useState(6); // Set to 6 to match 3-column grid
   const [total, setTotal] = useState(0);
   const [activeCategory, setActiveCategory] = useState<Category>('politics');
+  const [categoryExists, setCategoryExists] = useState<Record<Category, boolean>>({
+    politics: true,
+    economy: false,
+    technology: false
+  });
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const feedbackModalRef = React.useRef<HTMLDivElement>(null);
@@ -51,14 +54,15 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
     };
   }, []);
 
-  const loadBriefings = async (currentPage: number = 1, query: string = '') => {
+  const loadBriefings = async (currentPage: number = 1, query: string = '', category: Category = activeCategory) => {
     try {
       setLoading(true);
       setError(null);
       const result = await fetchBriefingList({
         page: currentPage,
         pageSize,
-        searchQuery: query
+        searchQuery: query,
+        category
       }, language);
       setBriefings(result.data);
       setTotal(result.total);
@@ -71,16 +75,44 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
     }
   };
 
+  // 检查各板块数据是否存在
+  const checkCategories = async () => {
+    const exists: Record<Category, boolean> = {
+      politics: true,
+      economy: false,
+      technology: false
+    };
+    
+    for (const cat of ['economy', 'technology'] as Category[]) {
+      exists[cat] = await checkCategoryExists(cat, language);
+    }
+    
+    setCategoryExists(exists);
+  };
+
   useEffect(() => {
-    loadBriefings(1, searchQuery);
-  }, [searchQuery, language]);
+    checkCategories();
+  }, [language]);
+
+  useEffect(() => {
+    loadBriefings(1, searchQuery, activeCategory);
+  }, [searchQuery, language, activeCategory]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
   const handlePageChange = (newPage: number) => {
-    loadBriefings(newPage, searchQuery);
+    loadBriefings(newPage, searchQuery, activeCategory);
+  };
+
+  const handleCategoryChange = (category: Category) => {
+    setActiveCategory(category);
+    setPage(1);
+  };
+
+  const handleSelectBriefing = (id: string) => {
+    onSelect(id, activeCategory);
   };
 
   const totalPages = Math.ceil(total / pageSize);
@@ -175,36 +207,19 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
             {/* Category Navigation - Politics & Military, Economy, Technology */}
             <nav className="border-t border-white/5">
                 <div className="flex items-center justify-center gap-8 h-8 px-4 max-w-7xl mx-auto">
-                    <button 
-                        onClick={() => setActiveCategory('politics')}
-                        className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
-                            activeCategory === 'politics' 
-                                ? 'text-white font-medium border-b-2 border-accent' 
-                                : 'text-subtext hover:text-white'
-                        }`}
-                    >
-                        {language === 'zh' ? '政治与军事' : 'Politics & Military'}
-                    </button>
-                    <button 
-                        onClick={() => setActiveCategory('economy')}
-                        className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
-                            activeCategory === 'economy' 
-                                ? 'text-white font-medium border-b-2 border-accent' 
-                                : 'text-subtext hover:text-white'
-                        }`}
-                    >
-                        {language === 'zh' ? '经济' : 'Economy'}
-                    </button>
-                    <button 
-                        onClick={() => setActiveCategory('technology')}
-                        className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
-                            activeCategory === 'technology' 
-                                ? 'text-white font-medium border-b-2 border-accent' 
-                                : 'text-subtext hover:text-white'
-                        }`}
-                    >
-                        {language === 'zh' ? '科技' : 'Technology'}
-                    </button>
+                    {(Object.keys(CATEGORY_CONFIG) as Category[]).map((cat) => (
+                        <button
+                            key={cat}
+                            onClick={() => handleCategoryChange(cat)}
+                            className={`text-xs uppercase tracking-widest h-full flex items-center transition-colors ${
+                                activeCategory === cat
+                                    ? 'text-white font-medium border-b-2 border-accent'
+                                    : 'text-subtext hover:text-white'
+                            }`}
+                        >
+                            {language === 'zh' ? CATEGORY_CONFIG[cat].labelZh : CATEGORY_CONFIG[cat].labelEn}
+                        </button>
+                    ))}
                 </div>
             </nav>
         </header>
@@ -234,8 +249,8 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
         </div>
 
         {/* Content based on loading/error state and active category */}
-        {activeCategory !== 'politics' ? (
-            // Economy and Technology categories - Coming Soon
+        {!categoryExists[activeCategory] ? (
+            // Category data not exists - Coming Soon
             <div className="flex flex-col items-center justify-center py-24 px-4">
                 <div className="w-20 h-20 mb-6 rounded-full bg-surface border border-white/10 flex items-center justify-center">
                     <svg className="w-10 h-10 text-accent/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -246,12 +261,12 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
                     {language === 'zh' ? '情报正在准备中' : 'Intelligence is Being Prepared'}
                 </h2>
                 <p className="text-subtext text-center max-w-md mb-6">
-                    {language === 'zh' 
-                        ? `${activeCategory === 'economy' ? '经济' : '科技'}板块的内容正在紧张筹备中，敬请期待...`
-                        : `The ${activeCategory === 'economy' ? 'Economy' : 'Technology'} section is being prepared. Stay tuned...`}
+                    {language === 'zh'
+                        ? `${CATEGORY_CONFIG[activeCategory].labelZh}板块的内容正在紧张筹备中，敬请期待...`
+                        : `The ${CATEGORY_CONFIG[activeCategory].labelEn} section is being prepared. Stay tuned...`}
                 </p>
                 <button
-                    onClick={() => setActiveCategory('politics')}
+                    onClick={() => handleCategoryChange('politics')}
                     className="px-6 py-3 bg-accent text-black font-medium rounded-full hover:bg-accent/90 transition-colors"
                 >
                     {language === 'zh' ? '返回政治与军事' : 'Back to Politics & Military'}
@@ -281,7 +296,7 @@ const ListView: React.FC<ListViewProps> = ({ onSelect, onBack: _onBack, t, langu
                     {briefings.map((item, index) => (
                         <div
                             key={item.id}
-                            onClick={() => onSelect(item.id)}
+                            onClick={() => handleSelectBriefing(item.id)}
                             className="group relative flex flex-col cursor-pointer bg-surface rounded-2xl overflow-hidden border border-white/5 hover:border-accent/40 transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)]"
                             style={{
                                 animationDelay: `${index * 100}ms`,
