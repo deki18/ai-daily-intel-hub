@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "2026-02-04",
+    "date": "2026-02-04",
+    "title": "The Central Bank of Uruguay cut interest rates by 100 basis points to 6.5%.",
+    "category": "economy",
+    "path": "/data/en/economy/archive/2026-02-04.json",
+    "summary": "According to our station, the Central Bank of Uruguay announced yesterday that it would cut its benchmark interest rate by 100 basis points to 6.5%, marking the country's first monetary policy adjustment this year. Notably, the central bank also announced a change in its policy meeting schedule to increase decision-making flexibility. This decision comes against the backdrop of a continued strengthening of the Uruguayan peso against the US dollar; data shows the peso has appreciated by 7.2% in the past three months. Analysts point out that this marks the beginning of a new phase in the South American country's monetary easing cycle.",
+    "coverImage": "https://picsum.photos/seed/2026-02-04/800/600"
+  }
+]
