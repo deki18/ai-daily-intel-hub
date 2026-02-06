@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-06",
+    "date": "2026-02-06",
+    "title": "US core inflation remains high at 3%, and the market expects the Federal Reserve to significantly slow the pace of interest rate cuts.",
+    "category": "economy",
+    "path": "/data/en/economy/archive/2026-02-06.json",
+    "summary": "According to Reuters and various economic data monitoring, inflationary pressures in the United States have shown a significant rebound in the past 24 hours. The latest report indicates that the core personal consumption expenditures (PCE) inflation rate is currently holding at 3%, a figure not only far above the Federal Reserve's long-term target of 2%, but also showing a further upward trend. As a result, the market has drastically revised its expectations regarding the pace of the Federal Reserve's monetary policy shift. Based on current interest rate futures pricing, the market generally predicts that the Fed will adopt a more cautious path, expecting only two rate cuts throughout 2026, while the originally anticipated first rate cut may be postponed to June of this year. Analysts point out that the stickiness of inflation presents the Federal Reserve with a greater challenge in balancing economic growth and price stability.",
+    "coverImage": "https://picsum.photos/seed/2026-02-06/800/600"
+  },
+  {
     "id": "2026-02-04",
     "date": "2026-02-04",
     "title": "The Central Bank of Uruguay cut interest rates by 100 basis points to 6.5%.",
