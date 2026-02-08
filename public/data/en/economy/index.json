@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-08",
+    "date": "2026-02-08",
+    "title": "The Federal Reserve maintained the upper limit of its benchmark interest rate at 3.75% to ensure monetary policy stability.",
+    "category": "economy",
+    "path": "/data/en/economy/archive/2026-02-08.json",
+    "summary": "According to our report, official data updated by the Federal Reserve Bank of St. Louis (FRED) on February 8, 2026, shows that the Federal Reserve Board of Governors decided to maintain the upper limit of the target range for the federal funds rate at 3.75%. The report indicates that this rate level has remained unchanged since early February, fully reflecting the Federal Open Market Committee's consistent stance of seeking to maintain monetary policy stability following its recent meetings. Observers point out that in the current macroeconomic environment, the Fed's move aims to provide the market with clear policy expectations, addressing potential economic volatility and ensuring the smooth functioning of the financial system by maintaining the existing interest rate framework.",
+    "coverImage": "https://picsum.photos/seed/2026-02-08/800/600"
+  },
+  {
     "id": "2026-02-06",
     "date": "2026-02-06",
     "title": "US core inflation remains high at 3%, and the market expects the Federal Reserve to significantly slow the pace of interest rate cuts.",
