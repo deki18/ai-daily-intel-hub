@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-09",
+    "date": "2026-02-09",
+    "title": "With the Federal Reserve keeping policy rates high, the market is focused on Warsh's \"Fed-Treasury agreement\" concept.",
+    "category": "economy",
+    "path": "/data/en/economy/archive/2026-02-09.json",
+    "summary": "According to our report, as of February 9, 2026, the upper limit of the Federal Reserve's target rate for the federal funds rate will remain at 3.75%. Although inflation expectations have been revised downwards in a University of Michigan survey, the US Treasury yield curve showed a slight flattening trend on February 8. Currently, the market is most focused on the new proposal put forward by Kevin Warsh, Trump's nominee for the next Federal Reserve Chairman. According to Bloomberg, Warsh proposed establishing a so-called \"Federal Reserve-Treasury Agreement,\" a concept that has sparked heated debate in the market. Investors worry that this move may imply that the Federal Reserve will have to indirectly support fiscal expansion by purchasing Treasury bonds in the future. Affected by this expectation, the spread between 2-year and 10-year US Treasury yields is currently still at a four-year high of approximately 69 to 74 basis points. Reports indicate that the global bond market is holding its breath awaiting the upcoming non-farm payroll and CPI data for clearer interest rate guidance.",
+    "coverImage": "https://picsum.photos/seed/2026-02-09/800/600"
+  },
+  {
     "id": "2026-02-08",
     "date": "2026-02-08",
     "title": "The Federal Reserve maintained the upper limit of its benchmark interest rate at 3.75% to ensure monetary policy stability.",
