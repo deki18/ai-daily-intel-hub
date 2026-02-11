@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-11",
+    "date": "2026-02-11",
+    "title": "Russia launches largest-ever airstrikes against Ukrainian energy facilities",
+    "category": "politics",
+    "path": "/data/en/politics/archive/2026-02-11.json",
+    "summary": "According to multiple foreign media reports, on February 10, 2026, Russia launched one of the largest air strikes against Ukraine since the outbreak of the conflict. The Russian military launched approximately 450 long-range drones and 70 missiles of various types across Ukraine, focusing its attacks on energy infrastructure in Kyiv, Kharkiv, and Odessa, causing widespread power outages. Al Jazeera reported that the attack, carried out in frigid temperatures dropping to -20 degrees Celsius, resulted in at least six deaths in Kharkiv, including a 10-year-old boy and his mother. Zelenskyy strongly condemned the attack, stating that it broke the four-day ceasefire and demonstrated that Russia was using the harsh winter as a weapon. This \"barbaric\" attack not only exacerbated the humanitarian crisis but also cast a shadow over upcoming peace negotiations.",
+    "coverImage": "https://picsum.photos/seed/2026-02-11/800/600"
+  },
+  {
     "id": "2026-02-07",
     "date": "2026-02-07",
     "title": "The US and Russia reached an agreement in Abu Dhabi to formally resume high-level military dialogue mechanisms.",
