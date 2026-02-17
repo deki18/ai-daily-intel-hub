@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-17",
+    "date": "2026-02-17",
+    "title": "A major turning point occurred in the southeastern Ukrainian conflict, with Ukrainian forces exploiting a communications malfunction to recapture 200 square kilometers of territory.",
+    "category": "politics",
+    "path": "/data/en/politics/archive/2026-02-17.json",
+    "summary": "According to the latest data from The Independent and the Institute for War Studies (ISW), the Ukrainian army has made its biggest advance since June 2023 in its counter-offensive east of Zaporizhzhia. In just a few days, the Ukrainian side successfully recaptured approximately 201 square kilometers of territory, a scale that essentially negates all the progress made by the Russian army since last December. Analysts point out that the Ukrainian breakthrough was largely due to the disruption of Russian command and communication caused by blocked Starlink access. Meanwhile, British Defense Secretary John Healy pointed out that due to severe combat casualties in the Russian army, Putin is being forced to increasingly rely on foreign mercenaries, whose losses have exceeded mobilization and supply capabilities.",
+    "coverImage": "https://picsum.photos/seed/2026-02-17/800/600"
+  },
+  {
     "id": "2026-02-12",
     "date": "2026-02-12",
     "title": "Intelligence indicates that Russia plans to strengthen its military presence on NATO's eastern flank, raising concerns in several European countries.",
