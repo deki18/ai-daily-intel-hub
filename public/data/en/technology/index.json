@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "2026-02-18",
+    "date": "2026-02-18",
+    "title": "India's Maharashtra state allocates 100 acres of land to support semiconductor manufacturing.",
+    "category": "technology",
+    "path": "/data/en/technology/archive/2026-02-18.json",
+    "summary": "According to EquityBulls, India's semiconductor industry has taken another crucial step in its localization process. The Maharashtra state government officially announced yesterday the allocation of 100 acres of land to leading semiconductor company RRP Electronics Ltd. for the construction of its semiconductor manufacturing facilities. According to this station, this land transfer is a core part of the state's strategy to strengthen its electronics manufacturing sector and build a local semiconductor ecosystem. This project not only represents the concrete implementation of India's national semiconductor strategy at the local level but also indicates that India is accelerating its efforts to secure a place in the global chip supply chain through increased administrative resources.",
+    "coverImage": "https://picsum.photos/seed/2026-02-18/800/600"
+  }
+]

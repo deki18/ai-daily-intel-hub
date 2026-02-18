@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "2026-02-18",
+    "date": "2026-02-18",
+    "title": "Daily Intelligence Report",
+    "category": "technology",
+    "path": "/data/zh/technology/archive/2026-02-18.json",
+    "summary": "Daily intelligence report",
+    "coverImage": "https://picsum.photos/seed/2026-02-18/800/600"
+  }
+]
