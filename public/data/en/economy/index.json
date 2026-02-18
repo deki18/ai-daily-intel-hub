@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-18",
+    "date": "2026-02-18",
+    "title": "Federal Reserve officials are divided: the window for rate cuts remains highly uncertain.",
+    "category": "economy",
+    "path": "/data/en/economy/archive/2026-02-18.json",
+    "summary": "According to our station, at this crucial moment before the release of the Federal Reserve's January meeting minutes, a clear \"hawkish-dove confrontation\" is emerging among officials regarding monetary policy. Federal Reserve Governor Michael Barr stated clearly on Tuesday that interest rates should remain high for some time until inflation consistently and steadily moves towards the 2% target, reflecting the Fed's internal vigilance regarding sticky inflation. However, Chicago Fed President Goolsby released a relatively dovish signal. In an interview, he pointed out that several rate cuts this year are possible if the labor market continues to cool and inflation gets on track. Currently, the market is paying close attention to Wednesday's meeting minutes with high caution, and the dollar index has risen above 97.22, boosted by this expectation. Analysts point out that the recent stronger-than-expected non-farm payroll data has made the Fed's policy choices in the first quarter more complex, with most officials preferring to digest the current policy contradictions through more economic data.",
+    "coverImage": "https://picsum.photos/seed/2026-02-18/800/600"
+  },
+  {
     "id": "2026-02-17",
     "date": "2026-02-17",
     "title": "Federal Reserve Vice Chair Bowman proposed regulatory reforms aimed at restoring banks' position in the mortgage lending market.",

@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-18",
+    "date": "2026-02-18",
+    "title": "Daily Intelligence Report",
+    "category": "economy",
+    "path": "/data/zh/economy/archive/2026-02-18.json",
+    "summary": "Daily intelligence report",
+    "coverImage": "https://picsum.photos/seed/2026-02-18/800/600"
+  },
+  {
     "id": "2026-02-17",
     "date": "2026-02-17",
     "title": "美联储副主席鲍曼提议监管改革，拟重振银行在抵押贷款市场地位",
