@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-19",
+    "date": "2026-02-19",
+    "title": "The minutes of the Fed's January meeting have been released, revealing that officials were deeply divided on the future path of interest rates.",
+    "category": "economy",
+    "path": "/data/en/economy/archive/2026-02-19.json",
+    "summary": "According to reports from Reuters and CNBC, the Federal Reserve released the minutes of its policy meeting at the end of January on February 18. The document revealed a clear division among policymakers regarding the path of the federal funds rate. Although the rate is currently maintained in the range of 3.5% to 3.75%, a \"hawkish-dove\" debate emerged within the meeting. Some officials advocated for further rate cuts if inflation continues to decline, while the other side strongly stated that if inflation remains above target, a resumption of rate hikes is not ruled out. Chairman Powell emphasized that a \"meeting-by-meeting\" approach will be adopted, meaning that the market will remain highly uncertain until the next policy meeting in March.",
+    "coverImage": "https://picsum.photos/seed/2026-02-19/800/600"
+  },
+  {
     "id": "2026-02-18",
     "date": "2026-02-18",
     "title": "Federal Reserve officials are divided: the window for rate cuts remains highly uncertain.",
