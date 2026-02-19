@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-19",
+    "date": "2026-02-19",
+    "title": "Daily Intelligence Report",
+    "category": "politics",
+    "path": "/data/zh/politics/archive/2026-02-19.json",
+    "summary": "Daily intelligence report",
+    "coverImage": "https://picsum.photos/seed/2026-02-19/800/600"
+  },
+  {
     "id": "2026-02-18",
     "date": "2026-02-18",
     "title": "美总统特使日内瓦开启“双轨外交”：同步磋商伊朗核问题与俄乌局势",
