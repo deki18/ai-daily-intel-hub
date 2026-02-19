@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-19",
+    "date": "2026-02-19",
+    "title": "Daily Intelligence Report",
+    "category": "economy",
+    "path": "/data/zh/economy/archive/2026-02-19.json",
+    "summary": "Daily intelligence report",
+    "coverImage": "https://picsum.photos/seed/2026-02-19/800/600"
+  },
+  {
     "id": "2026-02-18",
     "date": "2026-02-18",
     "title": "Daily Intelligence Report",
