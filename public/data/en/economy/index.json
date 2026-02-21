@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-02-21",
+    "date": "2026-02-21",
+    "title": "The Federal Reserve releases its daily H.15 interest rate data, providing the latest yields on Treasury bonds and market rates.",
+    "category": "economy",
+    "path": "/data/en/economy/archive/2026-02-21.json",
+    "summary": "According to our report, the Federal Reserve Board of Directors released its daily H.15 selected interest rate data on February 20, 2026. The report indicates that this release covers the nominal yields to maturity of Treasury bonds and inflation-hedging bonds, as well as several market interest rates, and is scheduled for release at 4:15 PM Eastern Time on a business day. The Fed also stated that this data provides current daily yield figures along with historical series and download tools to help the market track the direction of Treasury yields and key interest rates.",
+    "coverImage": "https://picsum.photos/seed/2026-02-21/800/600"
+  },
+  {
     "id": "2026-02-19",
     "date": "2026-02-19",
     "title": "The minutes of the Fed's January meeting have been released, revealing that officials were deeply divided on the future path of interest rates.",
